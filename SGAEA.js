@@ -19,6 +19,32 @@ class Direccion {
     }
 
     // Métodos get por si fueran necesarios en un futuro
+    set calle(calle){
+        this.#calle=calle;
+    }
+
+    set numero(numero){
+        this.#numero=numero;
+    }
+
+    set piso(piso){
+        this.#piso=piso;
+    }
+
+    set codigoPostal(codigo_postal){
+        this.#codigoPostal=codigoPostal;
+    }
+
+    set provincia(provincia){
+        this.#provincia=provincia;
+    }
+
+    set localidad(localidad){
+        this.#localidad=localidad;
+    }
+
+
+
     get calle() {
         return this.#calle;
     }
@@ -54,8 +80,13 @@ class Usuarios {
     }
 
     //setters y getters por si fueran necesarios
+
+    set id(id){
+        this.#id=id;
+    }
+
     set nombre(nombre) {
-        this.#nombre = nombre;
+         this.#nombre = nombre;
     }
 
     get id() {
@@ -102,9 +133,17 @@ class Estudiante extends Usuarios {
     }
 
     //setters y getters por si fuera necesario.
+    set id(id){
+        return super.id;
+    }
     set nombre(nombre) {
         return super.nombre;
     }
+
+    set direccion(direccion){
+        this.#direccion=direccion;
+    }
+
     get id() {
         return super.id;
     }
@@ -134,7 +173,11 @@ class Asignaturas {
 
 
     set nombre(nombre) {
-        return nombre;
+        this.#nombre=nombre;
+    }
+
+    set calificaciones(calificaciones){
+        this.#calificaciones=calificaciones;
     }
 
     //Metodo igual para el nombre de los alumnos pero ahora para comprobar la cadena de texto
@@ -245,6 +288,10 @@ class Listados {
     #listado_x;
     constructor(listado_x = []) {
         this.#listado_x = listado_x;
+    }
+
+    set listado_x(listado_x){
+        this.#listado_x=listado_x;
     }
 
     get listado_x() {
