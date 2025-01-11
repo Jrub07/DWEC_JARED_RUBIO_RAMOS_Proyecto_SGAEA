@@ -185,11 +185,13 @@ class Asignaturas {
         let comprobarCadena = /^[A-Za-zÁÉÍÓÚáéíóúÑñüÜ\s]+$/;
         let salir = false;
         do {
+
+            //Esto es un control de errores predecible, así que con if-else va bien
             if (comprobarCadena.test(cadena)) {
                 super.nombre = cadena;
                 salir = true;
             } else {
-                console.log("Asignatura. Solo se permiten letras y espacios.");
+                console.log("Error en asignatura. Solo se permiten letras y espacios.");
                 cadena = prompt("Escriba el nombre bien. Solo puede contener letras y espacios");
             }
         } while (!salir);
@@ -206,78 +208,6 @@ class Asignaturas {
     }
 
 
-
-    /* Metodo para añadir notas generales a la asignatura en cuestion si se deseara, aunque no es implementado en el codigo del menú se conserva
-    por si en un futuro se amplia a más funcionalidades del programa */
-
-    /* El codigo es un doble bucle: El primer bucle no deja de pedir el numero de notas que se quieren introducir hasta que el numero sea correcto,
-    este número no puede 0 o menor a este. Una vez se ha indicado el numero se añade un contador con el valor del número de notas a introducir y se
-     entra al segundo bucle, siguiendo la misma lógica se piden notas que estén incluidas en el rango de 0 hasta máximo 10. 
-     Una vez puesta la calificacion se hace un .push se incrementa el contador y se permite salir del bucle individual. Si el contador llega al
-     número de notas pedidas da salida al bucle principal y se acaba el método. Además de lo anterior, el metodo cuenta con un par de control de erroes try catch
-     por si no se mete un número en formato válido */
-    // asignatura_nota_general() {
-    //     let contador = 0;
-    //     let calificaciones_nuevas = [];
-    //     let notas_a_introducir;
-    //     let salir_principal = false;
-    //     do {
-    //         try {
-    //             notas_a_introducir = parseInt(prompt('¿Cuántas notas vas a introducir?'));
-    //             if (isNaN(notas_a_introducir) || notas_a_introducir <= 0) {
-    //                 console.log('Introduce un número válido de notas.');
-    //             }
-
-    //             for (let i = 0; i < notas_a_introducir; i++) {
-    //                 let salir_individual = false;
-
-    //                 do {
-    //                     try {
-    //                         let nota_individual = parseInt(prompt(`Introduce la nota ${i + 1}:`));
-    //                         if (isNaN(nota_individual) || nota_individual < 0 || nota_individual > 10) {
-    //                             console.log('La nota debe estar entre 0 y 10.');
-    //                         } else {
-    //                             this.#calificaciones.push(nota_individual);
-    //                             salir_individual = true;
-    //                             contador++;
-    //                         }
-    //                     } catch (error) {
-    //                         console.log('Formato de nota no válido. Intenta de nuevo.');
-    //                     }
-    //                 } while (!salir_individual);
-    //             }
-    //             if (contador == notas_a_introducir) {
-    //                 salir_principal = true;
-    //             }
-
-    //         } catch (error) {
-    //             console.log('Error al introducir las calificaciones. Intenta de nuevo.');
-    //         }
-    //     } while (!salir_principal);
-
-    //     return calificaciones_nuevas;
-    // }
-
-    /*Método para calcular la media por asignatura general.
-    El metodo aunque no se implementa en el menú calcula el promedio general de las notas generales puesta a la asignatura
-    El método revisa con una estructura que la asignatura no esté vacia o haya habido un error escribiendola con la longitud del array.
-    Si no tiene longitud o no hay notas o es que la asignatura es erronea
-    */
-    // calcular_promedio_asignatura() {
-    //     let calificaciones_asignatura = this.#calificaciones;
-    //     let suma_valores_calificaciones = 0;
-    //     let media;
-    //     if (calificaciones_asignatura.length !== 0) {
-    //         //Se hace un bucle for para ir recorriendo cada nota individual dentro de su array de notas.
-    //         for (let i = 0; i < this.#calificaciones.length; i++) {
-    //             suma_valores_calificaciones += this.#calificaciones[i];
-    //         }
-    //         media = suma_valores_calificaciones / this.#calificaciones.length;
-    //     } else {
-    //         console.log('No existe esa asignatura o no tiene calificaciones');
-    //     }
-    //     return media;
-    // }
 }
 
 /*Clase listado general usada para todos los listados del programa, se llama a su atributolistado_x 
@@ -604,18 +534,15 @@ class Listados {
                     } else {
 
                         const fecha_ES = new Date().toLocaleDateString('es-ES');
-                        try {
+                        
                             this.#listado_x.push([
                                 listado_alumnos.#listado_x[indice_id],
                                 listado_asignaturas.#listado_x[indice_asignatura],
                                 fecha_ES,
                                 [...listado_asignaturas.#listado_x[indice_asignatura].calificaciones]
-                            ]);
+                            ]);               
 
-                        } catch (error) {
-                            console.log('Algun parametro está undefined');
-
-                        }
+                        
 
                         let comprobar_matricula = null;
 
@@ -1019,43 +946,54 @@ class Listados {
     }
 }
 
+class errorPersonalizado extends Error{
+ constructor(mensaje){
+    super(mensaje);
+ }
+}
 
 /*Parte donde se corre el código, pero antes se hacen un par de funciones más. */
 
 /*Funcion para pedir texto al usuario, ya que se va a usar un menú e indicarle instrucciones al usuario de lo que tiene que escribir.
 La funcion principal es ahorrar líneas de código y no escribir todo de nuevo, y corregir que no sea entrada null o espacio vacio. */
+
+/*Nueva modificacion, ahora en vez de imprimir el error por console.log ahora lanza un error personalizado */
 function pedir_string(texto) {
     salir = false;
     do {
-        let cadena = prompt(`Dime qué ${texto} :`);
+        try {
+           let cadena = prompt(`Dime qué ${texto} :`);
         if (cadena === null || cadena.trim() === '') {
-            console.log('Cadena vacia o invalida');
+            throw new errorPersonalizado('Error: Has dejado la cadena vacía');
         } else {
             salir = true;
             return cadena;
-        }
+        } 
+        } catch (errorPersonalizado) {
+            console.log(errorPersonalizado.message);            
+        }       
 
     } while (!salir);
 
 }
 
 /*Funcion para pedir números al usuario, principalmente usado para controlar los errores del menú en el switch.
-En este metodo se pide número hasta que te de el correcto evitando tanto cadenas de texto como números negativos */
+En este metodo se pide número hasta que te de el correcto evitando tanto cadenas de texto como números negativos
+
+Actualizado: Añadimos error personalizado al igual que el anterior*/
 function pedir_numero() {
     let salir = false;
     let numero;
     do {
         try {
             numero = parseInt(prompt('Escribe un número que no sea menor a 0:'));
-            if (isNaN(numero)) {
-                console.log('No has introducido un número válido.');
-            } else if (numero < 0) {
-                console.log('Has escrito un número menor a 0.');
+            if (isNaN(numero) || numero<0) {
+                throw new errorPersonalizado("Error:Has introducido un numero negativo o no valido");                
             } else {
                 salir = true;
             }
-        } catch (error) {
-            console.log('Ocurrió un error inesperado.');
+        } catch (errorPersonalizado) {
+            console.log(errorPersonalizado.message);
         }
     } while (!salir);
     return numero;
@@ -1222,7 +1160,11 @@ do {
             console.log('Consultar promedio de un alumno por asignatura.');
             let consultar_alumno = pedir_string('ID del alumno para consultar promedio por asignatura');
             let consultar_asignatura = pedir_string('Nombre de la asignatura para la que ver promedio');
-            console.log(`Promedio en ${consultar_asignatura}: ` + listado_matriculas.promedio_notas_indidivuales_asignatura(consultar_alumno, consultar_asignatura));
+            let ver_promedio=listado_matriculas.promedio_notas_indidivuales_asignatura(consultar_alumno, consultar_asignatura);
+            if(ver_promedio!=null){
+                console.log(`Promedio para ${consultar_asignatura} es igual a : ${ver_promedio}`);
+
+            }
             break;
 
         case 16:
