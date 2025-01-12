@@ -1,7 +1,7 @@
 
 
 /**
- * Clase Direccion para encapsular atributos de dirección
+ * clase Direccion para encapsular atributos de dirección
  *
  * @class Direccion
  * @typedef {object} Direccion objeto para crear direcciones
