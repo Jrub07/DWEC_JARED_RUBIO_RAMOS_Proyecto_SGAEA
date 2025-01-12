@@ -1,4 +1,6 @@
 
+// PARA PROBAR EL CODIGO USAR LA ID 123456
+
 
 /**
  * clase Direccion para encapsular atributos de dirección
@@ -17,7 +19,7 @@ class Direccion {
     
     
     /**
-     * Costructor base para construir una dirección que irá posteriormente en un objeto de tipo Estudiante
+     * Constructor base para construir una dirección que irá posteriormente en un objeto de tipo Estudiante
      *
      * @constructor
      * @param {string} calle La calle de la direccion
