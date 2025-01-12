@@ -1,5 +1,11 @@
 
-// Clase Direccion para encapsular atributos de dirección
+
+/**
+ * Clase Direccion para encapsular atributos de dirección
+ *
+ * @class Direccion
+ * @typedef {object} Direccion objeto para crear direcciones
+ */
 class Direccion {
     #calle;
     #numero;
