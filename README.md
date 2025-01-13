@@ -30,14 +30,6 @@ En este metodo se pide número hasta que te de el correcto evitando tanto cadena
 </dd>
 </dl>
 
-## Typedefs
-
-<dl>
-<dt><a href="#Error">Error</a> : <code>object</code></dt>
-<dd><p>Clase para crear un objeto personalizado</p>
-</dd>
-</dl>
-
 <a name="Direccion"></a>
 
 ## Direccion
@@ -411,7 +403,7 @@ ya que x representa todo lo que puede guardar, desde alumnos, hasta notas a mane
 ### listados.listado\_x : <code>array</code>
 Set del listado de alumnos, asignaturas, matriculaciones o desmatriculaciones
 
-**Kind**: instance property of [<code>Listados</code>](#Listados)  
+**Kind**: instance property of [<code>Listados</code>](#Listados)
 <a name="Listados+listado_x"></a>
 
 ### listados.listado\_x ⇒ <code>array</code>
@@ -718,7 +710,7 @@ Metodo para reporte general de alumnos, para que no haya problemas con el anteri
 <a name="new_errorPersonalizado_new"></a>
 
 ### new errorPersonalizado(mensaje)
-Constructor para la clase de error personalizado.
+Error personalizado para que hereda de la clase general error.
 
 
 | Param | Type | Description |
@@ -749,10 +741,3 @@ Actualizado: Añadimos error personalizado al igual que el anterior
 
 **Kind**: global function
 **Returns**: <code>number</code> - devuelve el número que ha introducido el usuario
-<a name="Error"></a>
-
-## Error : <code>object</code>
-Clase para crear un objeto personalizado
-
-**Kind**: global typedef
-**Extends**: [<code>Error</code>](#Error)
