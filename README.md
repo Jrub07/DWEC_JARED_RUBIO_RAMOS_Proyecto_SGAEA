@@ -710,7 +710,7 @@ Metodo para reporte general de alumnos, para que no haya problemas con el anteri
 <a name="new_errorPersonalizado_new"></a>
 
 ### new errorPersonalizado(mensaje)
-Error personalizado para que hereda de la clase general error.
+Error personalizado  que hereda de la clase general error y genera un menasje personalizado.
 
 
 | Param | Type | Description |
