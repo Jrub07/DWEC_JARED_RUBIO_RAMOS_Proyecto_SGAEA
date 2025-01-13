@@ -2,24 +2,17 @@
 // PARA PROBAR EL CODIGO USAR LA ID 123456 y COMO ASIGNATURA LENGUA
 
 
-/**
- * clase Direccion para encapsular atributos de dirección
- *
- * @class Direccion
- * @typedef {object} Direccion objeto para crear direcciones
- */
-class Direccion {
+
+class Direccion {  
     #calle;
     #numero;
     #piso;
     #codigoPostal;
     #provincia;
     #localidad;
-
-    
     
     /**
-     * Constructor base para construir una dirección que irá posteriormente en un objeto de tipo Estudiante
+     * Clase base para construir una dirección que irá posteriormente en un objeto de tipo Estudiante
      *
      * @constructor
      * @param {string} calle La calle de la direccion
@@ -157,18 +150,13 @@ class Direccion {
 }
 
 
-/**
- * Clase Usuarios para definir el tipo de personas que hay en el sistema
- *
- * @class Usuarios
- * @typedef {object} Usuarios
- */
+
 class Usuarios {
     #id;
     #nombre;
     
     /**
-     * Constructor para la clase Usuarios, que se usará para crear los objetos de tipo Estudiante
+     * Clase Usuarios, que se usará para crear los objetos de tipo Estudiante
      *
      * @constructor
      * @param {string} id El identificador del usuario
@@ -219,7 +207,12 @@ class Usuarios {
         return this.#nombre;
     }
 
-    //metodo para hacer overide posteriomente.
+    
+    /**
+     * Metodo para hacer override posteriormente en la clase Estudiante
+     *
+     * @param {string} cadena cadena a validar 
+     */
     validar_cadenas(cadena) {
         console.log('Validando cadena...');
     }
@@ -227,24 +220,19 @@ class Usuarios {
 
 // Clase Estudiante que hereda de Usuarios y añade dirección
 
-/**
- * Clase estudiante que hereda de Usuarios y añade la dirección
- *
- * @class Estudiante
- * @typedef {object} Estudiante sirve para crear objetos de tipo Estudiante
- * @extends {Usuarios} Hereda de Usuarios
- */
+
 class Estudiante extends Usuarios {
     #direccion;
 
     
     /**
-     * Constructor para la clase Estudiante
+     * Clase  Estudiante que hereda de Usuarios
      *
      * @constructor
      * @param {string} id id del estudiante
      * @param {string} nombre nombre del estudiante
      * @param {string} direccion direccion del estudiante
+     * @extends Usuarios clase de donde se hereda
      */
     constructor(id, nombre, direccion) {
         super(id, nombre);
@@ -337,21 +325,16 @@ class Estudiante extends Usuarios {
 
 
 
-/**
- * Clase asignatura, en ella se pone el nombre de la asignatura y unas calificaciones generales para esta, posteriormente se podrán
-añadir notas individuales sin afectar a la general, pero si son añadidas aquí si el objeto es compartido afecta a varios alumnos,útil 
-si ha habido cualquier nota conjunta
- *
- * @class Asignaturas
- * @typedef {object} Asignaturas objeto para crear asignaturas.
- */
+
 class Asignaturas {
     #nombre;
     #calificaciones = [];
 
     
     /**
-     * Constructor para asignaturas.
+     * Clase asignatura, en ella se pone el nombre de la asignatura y unas calificaciones generales para esta, posteriormente se podrán
+añadir notas individuales sin afectar a la general, pero si son añadidas aquí si el objeto es compartido afecta a varios alumnos,útil 
+si ha habido cualquier nota conjunta
      *
      * @constructor
      * @param {string} nombre nombre de la asignatura
@@ -428,18 +411,13 @@ class Asignaturas {
 
 
 
-/**
- * Clase listado general usada para todos los listados del programa, se llama a su atributolistado_x 
-ya que x representa todo lo que puede guardar, desde alumnos, hasta notas a manera de array
- *
- * @class Listados
- * @typedef {object} Listados objeto para crear listados de alumnos, asignaturas, matriculaciones y desmatriculaciones
- */
+
 class Listados {
     #listado_x;
     
     /**
-     * Constructor para los listados
+     * Clase listado general usada para todos los listados del programa, se llama a su atributolistado_x 
+ya que x representa todo lo que puede guardar, desde alumnos, hasta notas a manera de array
      *
      * @constructor
      * @param {array} [listado_x=[]] listado de alumnos, asignaturas, matriculaciones o desmatriculaciones
@@ -1287,17 +1265,11 @@ class Listados {
 }
 
 
-/**
- * Clase para crear un objeto personalizado
- *
- * @class errorPersonalizado
- * @typedef {object} Error viene de la clase Error
- * @extends {Error}
- */
+
 class errorPersonalizado extends Error{
 
  /**
-  * Constructor para la clase de error personalizado.
+  * Error personalizado que hereda de la clase general error para imprimir mensajes personalizados.
   *
   * @constructor
   * @param {string} mensaje mensaje de error personalizado
