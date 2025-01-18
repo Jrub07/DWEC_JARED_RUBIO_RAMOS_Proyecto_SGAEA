@@ -1,14 +1,22 @@
 {
   "dependencies": {
+    "core-js": "^3.40.0",
     "jsdoc": "^4.0.4"
   },
   "name": "proyecto_sgaea",
   "version": "1.0.0",
   "description": "Proyecto de gestion de alumnos y asignaturas para profesores",
   "main": "sgaea.js",
-  "devDependencies": {},
+  "devDependencies": {
+    "@babel/core": "^7.26.0",
+    "@babel/preset-env": "^7.26.0",
+    "babel-loader": "^9.2.1",
+    "webpack": "^5.97.1",
+    "webpack-cli": "^6.0.1"
+  },
+  "browserslist": "> 0.25%, not dead,not ie 11",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "webpack"
   },
   "repository": {
     "type": "git",
