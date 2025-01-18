@@ -7,7 +7,7 @@ Nueva modificacion, ahora en vez de imprimir el error por console.log ahora lanz
  * @returns {string} devuelve la cadena de texto que ha introducido el usuario
  */
 function pedir_string(texto) {
-    salir = false;
+     let  salir = false;
     do {
         try {
            let cadena = prompt(`Dime qué ${texto} :`);

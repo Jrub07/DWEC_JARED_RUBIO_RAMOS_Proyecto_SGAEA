@@ -1,5 +1,5 @@
 import Asignatura from "./Asignaturas.js";
-import Alumno from './Alumno.js';
+import Estudiante from './Estudiantes.js';
 
 class Listados {
     #listado_x;

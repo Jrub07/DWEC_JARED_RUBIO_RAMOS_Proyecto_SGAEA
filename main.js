@@ -1,9 +1,9 @@
-import Estudiante from './Estudiante.js';
+import Estudiante from './Estudiantes.js';
 import Direccion from './Direccion.js';
 import Asignaturas from './Asignaturas.js';
 import Listados from './Listados.js';
 import errorPersonalizado from './errorPersonalizado.js';
-import { pedir_string, pedir_numero } from './Funciones.js';
+import Funciones from './Funciones.js';
 
 
 
