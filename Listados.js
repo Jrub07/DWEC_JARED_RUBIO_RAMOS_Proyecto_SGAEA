@@ -208,7 +208,7 @@ ya que x representa todo lo que puede guardar, desde alumnos, hasta notas a mane
             console.log("El listado está vacío");
         } else {
             console.log('Listado de estudiantes : ');
-            this.#listado_x.forEach(alumno => console.log(alumno.nombre));
+            this.#listado_x.forEach(alumno => console.log(alumno.nombre + '  id:' + alumno.id));
         }
     }
 

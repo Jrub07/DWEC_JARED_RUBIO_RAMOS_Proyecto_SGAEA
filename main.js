@@ -146,6 +146,7 @@ do {
 
         case 11:
             console.log('Matricular un alumno en una asignatura.');
+            listado_alumnos.mostrar_listado_alumnos();
             let id_alumno = Funciones.pedir_string('ID del alumno a matricular');
             let asignatura_nombre = Funciones.pedir_string('Nombre de la asignatura a matricular');
             listado_matriculas.matricular_alumno_asignatura(id_alumno, asignatura_nombre, listado_alumnos, listado_asignaturas);
@@ -153,6 +154,7 @@ do {
 
         case 12:
             console.log('Desmatricular un alumno de una asignatura.');
+            listado_alumnos.mostrar_listado_alumnos();
             let id_alumno_borrar = Funciones.pedir_string('ID del alumno para desmatricular');
             let asignatura_nombre_borrar = Funciones.pedir_string('Nombre de la asignatura para desmatricular');
             listado_matriculas.desmatricular_alumno_asignatura(id_alumno_borrar, asignatura_nombre_borrar, listado_desmatriculaciones);
@@ -160,6 +162,7 @@ do {
 
         case 13:
             console.log('Agregar notas a un estudiante.');
+            listado_alumnos.mostrar_listado_alumnos();
             let alumnos_asignar_notas = Funciones.pedir_string('ID del alumno para asignar notas');
             let asignatura_asignar_notas = Funciones.pedir_string('Asignatura a la que añadir notas');
             listado_matriculas.agregar_notas_matricula(alumnos_asignar_notas, asignatura_asignar_notas);
@@ -167,12 +170,14 @@ do {
 
         case 14:
             console.log('Consultar promedio de un alumno general.');
+            listado_alumnos.mostrar_listado_alumnos();
             let consultar_alumno_general = Funciones.pedir_string('ID del alumno para consultar promedio general');
             listado_matriculas.promedio_notas_alumno(consultar_alumno_general);
             break;
 
         case 15:
             console.log('Consultar promedio de un alumno por asignatura.');
+            listado_alumnos.mostrar_listado_alumnos();
             let consultar_alumno = Funciones.pedir_string('ID del alumno para consultar promedio por asignatura');
             let consultar_asignatura = Funciones.pedir_string('Nombre de la asignatura para la que ver promedio');
             let ver_promedio=listado_matriculas.promedio_notas_indidivuales_asignatura(consultar_alumno, consultar_asignatura);
@@ -184,6 +189,7 @@ do {
 
         case 16:
             console.log('Consultar promedio de una asignatura.');
+            listado_asignaturas.mostrar_listado_asignaturas();
             let promedio_asignatura = Funciones.pedir_string('Nombre de la asignatura para consultar promedio de alumnos');
             listado_matriculas.promedio_notas_asignatura(promedio_asignatura);
             break;
