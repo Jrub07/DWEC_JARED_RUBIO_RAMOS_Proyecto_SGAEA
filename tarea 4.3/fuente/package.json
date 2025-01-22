@@ -1,0 +1,33 @@
+{
+  "dependencies": {
+    "core-js": "^3.40.0",
+    "jsdoc": "^4.0.4"
+  },
+  "name": "proyecto_sgaea",
+  "version": "1.0.0",
+  "description": "Proyecto de gestion de alumnos y asignaturas para profesores",
+  "main": "sgaea.js",
+  "devDependencies": {
+    "@babel/core": "^7.26.0",
+    "@babel/preset-env": "^7.26.0",
+    "babel-loader": "^9.2.1",
+    "clean-webpack-plugin": "^4.0.0",
+    "html-webpack-plugin": "^5.6.3",
+    "webpack": "^5.97.1",
+    "webpack-cli": "^6.0.1"
+  },
+  "browserslist":[">1%","not dead"] ,
+  "scripts": {
+    "build": "webpack"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Jrub07/DWEC_Proyecto_SGAEA.git"
+  },
+  "author": "Jared Rubio (Jrub07)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Jrub07/DWEC_Proyecto_SGAEA/issues"
+  },
+  "homepage": "https://github.com/Jrub07/DWEC_Proyecto_SGAEA#readme"
+}
