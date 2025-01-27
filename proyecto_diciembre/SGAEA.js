@@ -1340,7 +1340,7 @@ function pedir_numero() {
 }
 
 //Creacion de los objetos para que no de error el menú.
-
+//
 const direccion_1 = new Direccion('Calle ejemplo 1', '22', '1A', '12345', 'Burgos', 'Burgos');
 const estudiante_1 = new Estudiante('123456', 'Pepe Sanchez', direccion_1);
 const estudiante_2 = new Estudiante('111111', 'Antonio Sanchez', direccion_1);
