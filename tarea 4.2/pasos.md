@@ -1,6 +1,6 @@
 # 1 Instalación de Node y extensiones
 
-## 1.2 Instalación de Node
+## 1.1 Instalación de Node
 El primer paso para ejectuar scripts de JavaScript será descargar una aplicación de escritorio llamada Node Js desde su dirección web : 
  https://nodejs.org/es
 
@@ -14,7 +14,7 @@ Si se ha instalado correcamente saldrá el siguiente mensaje:
 
 ![Instalacion exitosa](image.png)
 
-## 1.3 Instalación de JsDoc
+## 1.2 Instalación de JsDoc
 
 Una vez que se tine Node implementado, se va a proceder a descargar JsDoc. Para ello en la consola de comandos se  escribirá el siguiente comando: 
 
@@ -24,17 +24,17 @@ Debe salir este mensaje por consola:
 
 ![alt text](image-1.png)
 
-## 1.4 Instalación de JSDoc Generator
+## 1.3 Instalación de JSDoc Generator
 
 Una vez instados ambas extensiones, se va a recurrir a una extension muy util que permite generar codigo jsdoc para
 no tener que escribirlo a mano, esta extensión se llama JSDoc Generator
 
 ![alt text](image-2.png)
 
-## 1.5 Instalacion de JS to Markdown
+## 1.4 Instalacion de JS to Markdown
 
 Finalmente, se va proceder a descargar una extensión que permite transformar todo el código JsDoc que se genere a Markdown
-la extensión se llama JsDoc to Markdown y se puede obtener desde el siguiente enlace (https://www.npmjs.com/package/jsdoc-to-markdown)
+la extensión se llama JsDoc to Markdown y se puede obtener desde el siguiente enlace:  https://www.npmjs.com/package/jsdoc-to-markdown
 
 Solo se deberá instalar de nuevo con el siguiente comando: 
 
