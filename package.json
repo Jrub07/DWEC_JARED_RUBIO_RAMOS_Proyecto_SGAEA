@@ -27,5 +27,9 @@
     "@babel/preset-env": "^7.26.8",
     "babel-loader": "^9.2.1",
     "core-js": "^3.40.0"
-  }
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead"
+  ]
 }
