@@ -16,7 +16,7 @@
     "webpack": "^5.97.1",
     "webpack-cli": "^6.0.1"
   },
-  "browserslist":[">1%","not dead"] ,
+  "browserslist":["last 100 versions"] ,
   "scripts": {
     "build": "webpack"
   },
