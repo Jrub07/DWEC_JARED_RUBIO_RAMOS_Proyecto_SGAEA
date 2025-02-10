@@ -8,6 +8,11 @@ import Funciones from './Funciones.js';
 
 
 
+ 
+
+
+
+
 //Creacion de los objetos para que no de error el menú.
 
 const direccion_1 = new Direccion('Calle ejemplo 1', '22', '1A', '12345', 'Burgos', 'Burgos');

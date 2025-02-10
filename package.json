@@ -1,0 +1,19 @@
+{
+  "name": "dwec_jared_rubio_ramos_proyecto_sgaea",
+  "version": "1.0.0",
+  "description": "Proyecto JS dividido en módulos",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Jrub07/DWEC_JARED_RUBIO_RAMOS_Proyecto_SGAEA.git"
+  },
+  "author": "Jared",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Jrub07/DWEC_JARED_RUBIO_RAMOS_Proyecto_SGAEA/issues"
+  },
+  "homepage": "https://github.com/Jrub07/DWEC_JARED_RUBIO_RAMOS_Proyecto_SGAEA#readme"
+}
