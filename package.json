@@ -29,6 +29,6 @@
     "core-js": "^3.40.0"
   },
   "browserslist": [
-    "last 50 versions"
+    "last 100 versions"
   ]
 }
