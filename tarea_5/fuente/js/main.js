@@ -30,7 +30,7 @@ document.getElementById('ejecutar').addEventListener('click', () => {
 
 function mostrar_menu() {
     const mostrar_Resultados = document.getElementById("mostrar_resultados");
-    mostrarResultados.innerHTML = `
+    mostrar_Resultados.innerHTML = `
         <p>Bienvenido al programa de gestión de alumnos.</p>
         <p>Escribe una opción del menú:</p>
         <ul>
@@ -52,7 +52,6 @@ function mostrar_menu() {
             <li>16- Consultar promedio de una asignatura</li>
             <li>17- Consultar promedio general de alumnos</li>
             <li>18- Consultar reporte general</li>
-            
         </ul>
 
         <!-- Formulario -->
@@ -62,7 +61,6 @@ function mostrar_menu() {
         </form>
     `;
 
-    
     document.getElementById("formulario_main").addEventListener("submit", function(event) {
         event.preventDefault();
         opcion_seleccionada(); 
