@@ -97,7 +97,7 @@ plugins: [
   ],
 ```
 
-El conjunto del codigo se verá así:
+El conjunto del codigo se verá así, el cual puede usarse como plantilla:
 ```
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -107,7 +107,7 @@ module.exports = {
     mode: 'production', // Modo de producción
     entry: path.resolve(__dirname, 'js/main.js'), 
     output: {
-        filename: 'bundle.js',
+        filename: '[name][contenthash].js',
         path: path.resolve(__dirname, 'dist'),
     },
     module: {
@@ -131,7 +131,7 @@ module.exports = {
 ```
 
 
-## 2. Instalación de Babel y Compilación Final 
+## 2. Instalación de Babel 
 
 
 Una vez completado esto, se debe de añadir un compilador llamado Babel, que permita interpretar archivos de diferentes maneras, para ello se debe ir a la consola de comandos y escribir lo siguiente:
@@ -169,7 +169,32 @@ El paso final es compilar el archivo con el siguiente comando dentro del directo
 ``` 
 npm run build
 ```
-Esto habrá creado una carpeta llamda dist, el paso final será elegir un servidor web en el que se compile como por ejemplo `https://www.netlify.com/` asegurando que sea la carpeta `dist` de donde se recoja el archivo para desplegar.
+
+Esto habrá creado una carpeta llamda dist, que se usará para desplegar el proyecto posteriormente.
+
+## 3. Comprobación en web
+
+Para desplegar el proyecto se ha accedido a la siguiente
+web (netlify.com).
+
+Lo siguiente se debe resgistrarse como usuario.
+
+Una vez hecho, se pedirá si se quiere enlazar el proyecto desde GitHub, se le debe indicar si, y una vez hecho
+empezará a pedir detalles de dónde se requiere desplegar el proyecto a nivel de carpetas, al que se le debe indicar donde esta dist en este caso como se indica a continuación:
+
+![Despliegue con Netlify](./despliegue.png)
+
+Una vez indicados los datos, si no ha habido errores generará el proyecto en un enlace que se debe copiar, en este caso:
+
+``` https://bright-naiad-790f12.netlify.app/```
+
+A contiuación hay que dirigirse a `https://www.browserstack.com/`
+
+En esta pagina hay que registartse, y se usará para probar la compatibilidad con navegadores antiguos, en este caso, una vez hecho el registro se puede seleccionar el tipo de navegador en el que probar, en este caso con Firefox 41 dentro de Windows 11
+como se indica a continuación:
+
+![Enlaces navegadores](./navegadores.png)
+
 
 Al contemplar las últimas versiones, si se selecciona Firefox 41 desde un servicio web `browserstack.com` debería salir compatibilidad, como se muestra a continuación:
 
