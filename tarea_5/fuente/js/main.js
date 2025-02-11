@@ -24,6 +24,10 @@ const listado_matriculas = new Listados([
 ]);
 let listado_desmatriculaciones = new Listados([[estudiante_3, asignatura_2, "22-01-1998", '22-02-2007']]);
 
+document.getElementById('ejecutar').addEventListener('click', () => {
+    mostrar_menu();
+});
+
 function mostrar_menu() {
     const mostrar_Resultados = document.getElementById("mostrar_resultados");
     mostrarResultados.innerHTML = `
