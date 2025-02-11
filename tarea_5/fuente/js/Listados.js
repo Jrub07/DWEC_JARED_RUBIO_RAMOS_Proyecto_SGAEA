@@ -45,11 +45,12 @@ ya que x representa todo lo que puede guardar, desde alumnos, hasta notas a mane
      * @param {object} alumno objeto de tipo Estudiante
      */
     agregar_alumno_listado(alumno) {
+        const mostrar_Resultados = document.getElementById("mostrar_resultados");
         if (this.#listado_x.some(a => a.id === alumno.id)) {
-            console.log("El alumno ya está en el listado");
+            mostrar_Resultados.innerHTML = "<p>El alumno ya está en el listado</p>";
         } else {
             this.#listado_x.push(alumno);
-            console.log('Alumno agregado: ' + alumno.nombre);
+            mostrar_Resultados.innerHTML = `<p>Alumno agregado: ${alumno.nombre}</p>`;
 
             //Se deja comentado ya que no se ha explicado el método, pero en resumen muestra el listado de alumnos.
             // this.mostrar_listado_alumnos();
@@ -73,6 +74,7 @@ ya que x representa todo lo que puede guardar, desde alumnos, hasta notas a mane
      * @param {object} lista_matricula objeto listado de matriculaciones
      */
     eliminar_alumno_listado(id, lista_matricula) {
+        const mostrar_Resultados = document.getElementById("mostrar_resultados");
         let indice_para_borrar = -1;
 
         for (let i = 0; i < this.#listado_x.length; i++) {
@@ -82,10 +84,10 @@ ya que x representa todo lo que puede guardar, desde alumnos, hasta notas a mane
         }
 
         if (indice_para_borrar === -1) {
-            console.log('No existe el alumno en el listado');
+            mostrar_Resultados.innerHTML = "<p>No existe el alumno en el listado</p>";
         } else {
             this.#listado_x.splice(indice_para_borrar, 1);
-            console.log('Alumno borrado con éxito');
+            mostrar_Resultados.innerHTML = "<p>Alumno borrado con éxito</p>";
 
             for (let i = lista_matricula.#listado_x.length - 1; i >= 0; i--) {
                 if (lista_matricula.#listado_x[i][0].id === id) {
@@ -105,11 +107,12 @@ ya que x representa todo lo que puede guardar, desde alumnos, hasta notas a mane
       */
      
     agregar_asignatura_listado(asignatura) {
+        const mostrar_Resultados = document.getElementById("mostrar_resultados");
         if (this.#listado_x.some(a => a.nombre === asignatura.nombre)) {
-            console.log("La asignatura ya está en el listado");
+            mostrar_Resultados.innerHTML = "<p>La asignatura ya está en el listado</p>";
         } else {
             this.#listado_x.push(asignatura);
-            console.log('Asignatura agregada: ' + asignatura.nombre);
+            mostrar_Resultados.innerHTML = `<p>Asignatura agregada: ${asignatura.nombre}</p>`;
             this.mostrar_listado_asignaturas();
         }
     }
@@ -120,6 +123,7 @@ ya que x representa todo lo que puede guardar, desde alumnos, hasta notas a mane
       * @param {object} lista_matriculas objeto listado de matriculaciones
       */     
     eliminar_asignatura_listado(asignatura, lista_matriculas) {
+        const mostrar_Resultados = document.getElementById("mostrar_resultados");
         let indice_para_borrar = -1;
 
         for (let i = 0; i < this.#listado_x.length; i++) {
@@ -129,10 +133,10 @@ ya que x representa todo lo que puede guardar, desde alumnos, hasta notas a mane
         }
 
         if (indice_para_borrar === -1) {
-            console.log('No existe esa asignatura en el listado');
+            mostrar_Resultados.innerHTML = "<p>No existe esa asignatura en el listado</p>";
         } else {
             this.#listado_x.splice(indice_para_borrar, 1);
-            console.log('Asignatura con éxito');
+            mostrar_Resultados.innerHTML = "<p>Asignatura borrada con éxito</p>";
 
             for (let i = lista_matriculas.#listado_x.length - 1; i >= 0; i--) {
                 if (lista_matriculas.#listado_x[i][1].nombre === asignatura) {
@@ -140,12 +144,8 @@ ya que x representa todo lo que puede guardar, desde alumnos, hasta notas a mane
                 }
             }
         }
-
-
     }
 
-
-    
     /**
      * Metodo para buscar un patron de texto que coincida parcialmente.
     Se crea un parametro de busqueda que es un texto, y se pasa como parametro de una expresion regular
@@ -157,19 +157,20 @@ ya que x representa todo lo que puede guardar, desde alumnos, hasta notas a mane
      * @param {string} busqueda nombre de la asignatura a buscar
      */
     buscar_asignatura(busqueda) {
+        const mostrar_Resultados = document.getElementById("mostrar_resultados");
         let contador = 0;
         let buscar = new RegExp(busqueda, 'i');
         if (this.#listado_x.length === 0 || busqueda.trim() === "") {
-            console.log('El listado de asignaturas está vacío o no has escrito bien la cadena');
+            mostrar_Resultados.innerHTML = "<p>El listado de asignaturas está vacío o no has escrito bien la cadena</p>";
         } else {
             this.#listado_x.forEach(a => {
                 if (buscar.test(a.nombre)) {
-                    console.log('Asignatura encontrada: ' + a.nombre);
+                    mostrar_Resultados.innerHTML += `<p>Asignatura encontrada: ${a.nombre}</p>`;
                     contador++;
                 }
             });
             if (contador === 0) {
-                console.log('No existe esa asignatura en el listado');
+                mostrar_Resultados.innerHTML = "<p>No existe esa asignatura en el listado</p>";
             }
         }
     }
@@ -181,19 +182,20 @@ ya que x representa todo lo que puede guardar, desde alumnos, hasta notas a mane
      * @param {string} busqueda cadena a buscar 
      */
     buscar_alumnos(busqueda) {
+        const mostrar_Resultados = document.getElementById("mostrar_resultados");
         let contador = 0;
         let buscar = new RegExp(busqueda, 'i');
         if (this.#listado_x.length === 0 || busqueda.trim() === "") {
-            console.log('El listado de alumnos está vacío o no has escrito bien la cadena');
+            mostrar_Resultados.innerHTML = "<p>El listado de alumnos está vacío o no has escrito bien la cadena</p>";
         } else {
             this.#listado_x.forEach(a => {
                 if (buscar.test(a.nombre)) {
-                    console.log('Alumno encontrado: ' + a.nombre);
+                    mostrar_Resultados.innerHTML += `<p>Alumno encontrado: ${a.nombre}</p>`;
                     contador++;
                 }
             });
             if (contador === 0) {
-                console.log('No existe ese alumno en el listado');
+                mostrar_Resultados.innerHTML = "<p>No existe ese alumno en el listado</p>";
             }
         }
     }
@@ -204,22 +206,31 @@ ya que x representa todo lo que puede guardar, desde alumnos, hasta notas a mane
     Con un condicional se comprueba si el listado está vacío indicando que lo está y
     sino se hace un foreach con los nombres de los alumnos. */
     mostrar_listado_alumnos() {
+        const mostrar_Resultados = document.getElementById("mostrar_resultados");
         if (this.#listado_x.length === 0) {
-            console.log("El listado está vacío");
+            mostrar_Resultados.innerHTML = "<p>El listado está vacío</p>";
         } else {
-            console.log('Listado de estudiantes : ');
-            this.#listado_x.forEach(alumno => console.log(alumno.nombre + '  id:' + alumno.id));
+            let listado = "<p>Listado de estudiantes:</p> <ul>";
+            this.#listado_x.forEach(alumno => {
+                listado += `<li>${alumno.nombre} - ID: ${alumno.id}</li>`;
+            });
+            listado += "</ul>";
+            mostrar_Resultados.innerHTML = listado;
         }
     }
 
     
     /** Metodo para ver el listado de asignaturas, que es exactamente igual al anterior */
     mostrar_listado_asignaturas() {
+        const mostrar_Resultados = document.getElementById("mostrar_resultados");
         if (this.#listado_x.length === 0) {
-            console.log("El listado está vacío");
+            document.getElementById("mostrar_resultados").innerHTML = "<p>El listado está vacío</p>";
+            
         } else {
-            console.log('Listado de asignaturas : ');
-            this.#listado_x.forEach(asignatura => console.log(asignatura.nombre));
+            let listado = "<p>Listado de asignaturas:</p> <ul>";
+            this.#listado_x.forEach(asignatura => { listado += `<li>${asignatura.nombre}</li>`; });
+            listado += "</ul>";
+            mostrar_Resultados.innerHTML = listado;
         }
     }
 
@@ -228,16 +239,21 @@ ya que x representa todo lo que puede guardar, desde alumnos, hasta notas a mane
     Es parecido a los anteriores, pero se recorre la lista con un bucle for para ir indicandole en cada
     posicion lo que busca */
     mostrar_matriculaciones() {
+        const mostrar_Resultados = document.getElementById("mostrar_resultados");
 
         if (this.#listado_x.length == 0) {
-            console.log('Listado de matriculaciones vacio');
+            let listado = "<p>Listado de matriculaciones vacio</p> <ul>";
+            document.getElementById("mostrar_resultados").innerHTML = listado
 
         } else {
-            console.log('Listado de matriculaciones: ')
+            let listado = "<p>Listado de matriculaciones: </p> <ul>";
+            
             for (let i = 0; i < this.#listado_x.length; i++) {
-                console.log(`||Alumno : ${this.#listado_x[i][0].nombre} || Asignatura : ${this.#listado_x[i][1].nombre} || Fecha_matricula : ${this.#listado_x[i][2]}`);
-
+                listado += `<li>Alumno: ${this.#listado_x[i][0].nombre} - Asignatura: ${this.#listado_x[i][1].nombre} - Fecha matriculación: ${this.#listado_x[i][2]}</li>`;
+                
             }
+            listado += "</ul>";
+            mostrar_Resultados.innerHTML = listado;
         }
 
     };
@@ -245,15 +261,20 @@ ya que x representa todo lo que puede guardar, desde alumnos, hasta notas a mane
     
     /** Metodo para ver las desmatriculaciones. Es igual al anterior, pero solo busca en la lista de desmatriculaciones. */
     mostrar_desmatriculaciones() {
+        
         if (this.#listado_x.length == 0) {
-            console.log('Listado de desmatriculaciones vacio');
+            let listado="<p>Listado de desmatriculaciones vacio</p> <ul>";
+            document.getElementById("mostrar_resultados").innerHTML = listado
 
         } else {
-            console.log('Listado de desmatriculaciones: ')
+            let listado = "<p>Listado de desmatriculaciones: </p> <ul>";
+            
             for (let i = 0; i < this.#listado_x.length; i++) {
-                console.log(`||Alumno : ${this.#listado_x[i][0].nombre} || Asignatura : ${this.#listado_x[i][1].nombre} || Fecha_matricula : ${this.#listado_x[i][2]} || Fecha_desmatricula : ${this.#listado_x[i][3]}`);
-
+                listado += `<li>Alumno: ${this.#listado_x[i][0].nombre} - Asignatura: ${this.#listado_x[i][1].nombre} - Fecha matriculación: ${this.#listado_x[i][2]} - Fecha desmatriculación: ${this.#listado_x[i][3]}</li>`;
+                
             }
+            listado += "</ul>";
+            document.getElementById("mostrar_resultados").innerHTML = listado;
         }
     };
 
@@ -311,7 +332,8 @@ ya que x representa todo lo que puede guardar, desde alumnos, hasta notas a mane
         }
 
         if (indice_alumno === null || indice_asignatura === null || contador_matricula !== 0) {
-            console.log('Hay algun alumno o asignatura fuera de los listados o bien la matricula ya está hecha para ese alumno y asignatura');
+            let mensaje='<p>Hay algun alumno o asignatura fuera de los listados o bien la matricula ya está hecha para ese alumno y asignatura </p>';
+            document.getElementById("mostrar_resultados").innerHTML = mensaje;
 
         } else {
             this.#listado_x.push([listado_alumnos.#listado_x[indice_alumno], listado_asignaturas.#listado_x[indice_asignatura], fecha_ES, [...listado_asignaturas.#listado_x[indice_asignatura].calificaciones]]);
@@ -334,89 +356,94 @@ ya que x representa todo lo que puede guardar, desde alumnos, hasta notas a mane
     /**
      * Test para comprobar dónde están los fallos en las matriculaciones si los hubiera.
     /* Consiste en un if anidado que fuerza a la salida cada vez que hay algo mal para que se vea
-    todo de manera más clara a la hora de cambiar algo.
+    todo de manera más clara a la hora de cambiar algo
+    
+    ACTUALIZACION 2025, No se cambia a estructuras integradas en navegador ya que el codigo funciona bien de por sí.
      *
-     * @param {string} id id del alumno a matricular
-     * @param {string} asignatura_nombre nombre de la asignatura a matricular
-     * @param {object} listado_alumnos objeto listado de alumnos
-     * @param {object} listado_asignaturas objeto listado de asignaturas
+    //  * @param {string} id id del alumno a matricular
+    //  * @param {string} asignatura_nombre nombre de la asignatura a matricular
+    //  * @param {object} listado_alumnos objeto listado de alumnos
+    //  * @param {object} listado_asignaturas objeto listado de asignaturas
      */
-    test_matricula(id, asignatura_nombre, listado_alumnos, listado_asignaturas) {
-        let indice_id = null;
-        let indice_asignatura = null;
-        let contador_matricula = 0;
+    // test_matricula(id, asignatura_nombre, listado_alumnos, listado_asignaturas) {
+    //     let indice_id = null;
+    //     let indice_asignatura = null;
+    //     let contador_matricula = 0;
 
 
-        if (id == null || asignatura_nombre == null || listado_alumnos == null || listado_asignaturas == null) {
-            console.log('Alguno de los parámetros es nulo');
-        } else {
+    //     if (id == null || asignatura_nombre == null || listado_alumnos == null || listado_asignaturas == null) {
+    //         let mensaje='<p>Alguno de los parámetros es nulo</p>';
+    //         document.getElementById("mostrar_resultados").innerHTML = mensaje;
+           
+    //     } else {
 
-            for (let i = 0; i < listado_alumnos.#listado_x.length; i++) {
-                if (listado_alumnos.#listado_x[i].id === id) {
-                    console.log('Se ha encontrado el índice del alumno');
-                    indice_id = i;
-                    break;
-                }
-                console.log('No está el id');
-            }
+    //         for (let i = 0; i < listado_alumnos.#listado_x.length; i++) {
+    //             if (listado_alumnos.#listado_x[i].id === id) {
+    //                 let mensaje='<p>Se ha encontrado el índice del alumno</p>';
+    //                 document.getElementById("mostrar_resultados").innerHTML = mensaje;                   
+    //                 indice_id = i;
+    //                 break;
+    //             }
+    //             console.log('No está el id');
+    //         }
 
-            if (indice_id === null || listado_alumnos.#listado_x.length === 0) {
-                console.log('No está el índice del alumno o has introducido un listado erróneo');
-            } else {
+    //         if (indice_id === null || listado_alumnos.#listado_x.length === 0) {
+    //             console.log('No está el índice del alumno o has introducido un listado erróneo');
+    //         } else {
 
-                for (let i = 0; i < listado_asignaturas.#listado_x.length; i++) {
-                    if (listado_asignaturas.#listado_x[i].nombre === asignatura_nombre) {
-                        console.log('Se ha encontrado el índice de la asignatura');
-                        indice_asignatura = i;
-                        break;
-                    }
-                }
+    //             for (let i = 0; i < listado_asignaturas.#listado_x.length; i++) {
+    //                 if (listado_asignaturas.#listado_x[i].nombre === asignatura_nombre) {
+    //                     console.log('Se ha encontrado el índice de la asignatura');
+    //                     indice_asignatura = i;
+    //                     break;
+    //                 }
+    //             }
 
-                if (indice_asignatura === null || listado_asignaturas.#listado_x.length === 0) {
-                    console.log('No está la asignatura o bien el listado está vacío');
-                } else {
+    //             if (indice_asignatura === null || listado_asignaturas.#listado_x.length === 0) {
+    //                 console.log('No está la asignatura o bien el listado está vacío');
+    //             } else {
 
-                    for (let i = 0; i < this.#listado_x.length; i++) {
-                        if (this.#listado_x[i][0].id === id && this.#listado_x[i][1].nombre === asignatura_nombre) {
-                            contador_matricula++;
-                        }
-                    }
+    //                 for (let i = 0; i < this.#listado_x.length; i++) {
+    //                     if (this.#listado_x[i][0].id === id && this.#listado_x[i][1].nombre === asignatura_nombre) {
+    //                         contador_matricula++;
+    //                     }
+    //                 }
 
-                    if (contador_matricula !== 0) {
-                        console.log('Ya está el alumno matriculado para esa asignatura');
-                    } else {
+    //                 if (contador_matricula !== 0) {
+    //                     console.log('Ya está el alumno matriculado para esa asignatura');
+    //                 } else {
 
-                        const fecha_ES = new Date().toLocaleDateString('es-ES');
+    //                     const fecha_ES = new Date().toLocaleDateString('es-ES');
                         
-                            this.#listado_x.push([
-                                listado_alumnos.#listado_x[indice_id],
-                                listado_asignaturas.#listado_x[indice_asignatura],
-                                fecha_ES,
-                                [...listado_asignaturas.#listado_x[indice_asignatura].calificaciones]
-                            ]);               
+    //                         this.#listado_x.push([
+    //                             listado_alumnos.#listado_x[indice_id],
+    //                             listado_asignaturas.#listado_x[indice_asignatura],
+    //                             fecha_ES,
+    //                             [...listado_asignaturas.#listado_x[indice_asignatura].calificaciones]
+    //                         ]);               
 
                         
 
-                        let comprobar_matricula = null;
+    //                     let comprobar_matricula = null;
 
-                        for (let i = 0; i < this.#listado_x.length; i++) {
-                            if (this.#listado_x[i][0].id === id && this.#listado_x[i][1].nombre === asignatura_nombre) {
-                                comprobar_matricula = i;
-                            }
+    //                     for (let i = 0; i < this.#listado_x.length; i++) {
+    //                         if (this.#listado_x[i][0].id === id && this.#listado_x[i][1].nombre === asignatura_nombre) {
+    //                             comprobar_matricula = i;
+    //                         }
 
-                            if (comprobar_matricula === null) {
-                                console.log('Error al introducir el alumno en el array');
-                            } else {
-                                console.log('Exito al introducir el alumno al array');
-                                this.mostrar_matriculaciones();
-                            }
+    //                         if (comprobar_matricula === null) {
+    //                             console.log('Error al introducir el alumno en el array');
+    //                         } else {
+    //                             console.log('Exito al introducir el alumno al array');
+    //                             this.mostrar_matriculaciones();
+    //                         }
 
-                        }
-                    }
-                }
-            }
-        }
-    }
+    //                     }
+    //                 }
+    //             }
+    //         }
+    //     }
+    // }
 
     
     /**
@@ -429,6 +456,7 @@ ya que x representa todo lo que puede guardar, desde alumnos, hasta notas a mane
      * @param {object} listado_desmatriculaciones objeto listado de desmatriculaciones
      */
     desmatricular_alumno_asignatura(id, nombre_asignatura, listado_desmatriculaciones) {
+        let mensaje="";
         let fecha_desmatriculacion = new Date();
         let fecha_ES = fecha_desmatriculacion.toLocaleDateString('es-ES');
         let indice_para_borrar = -1;
@@ -439,11 +467,14 @@ ya que x representa todo lo que puede guardar, desde alumnos, hasta notas a mane
             }
         }
         if (indice_para_borrar === -1) {
-            console.log('No existe el alumno en la asignatura');
+            mensaje='<p>No existe el alumno en la asignatura</p>';
+            document.getElementById("mostrar_resultados").innerHTML = mensaje;
+            
         } else {
-
+            
             this.#listado_x.splice(indice_para_borrar, 1);
-            console.log('Alumno desmatriculado con éxito');
+            mensaje='<p>Alumno desmatriculado con éxito</p>';
+            document.getElementById("mostrar_resultados").innerHTML = mensaje;            
             //this.mostrar_matriculaciones();
         }
     }
@@ -462,55 +493,37 @@ ya que x representa todo lo que puede guardar, desde alumnos, hasta notas a mane
        */
       
     agregar_notas_matricula(id, asignatura) {
-        let contador = 0;
         let indice_para_calificaciones = null;
-        let notas_a_introducir;
-        let salir_principal = false;
+        let mensaje = "";
 
         for (let i = 0; i < this.#listado_x.length; i++) {
             if (this.#listado_x[i][0].id === id && this.#listado_x[i][1].nombre === asignatura) {
                 indice_para_calificaciones = i;
-                do {
-                    try {
-                        notas_a_introducir = parseInt(prompt('¿Cuántas notas vas a introducir?'));
-                        if (isNaN(notas_a_introducir) || notas_a_introducir <= 0) {
-                            console.log('Introduce un número válido de notas.');
-                        }
-
-                        for (let i = 0; i < notas_a_introducir; i++) {
-                            let salir_individual = false;
-
-                            do {
-                                try {
-                                    let nota_individual = parseInt(prompt(`Introduce la nota ${i + 1}:`));
-                                    if (isNaN(nota_individual) || nota_individual < 0 || nota_individual > 10) {
-                                        console.log('La nota debe estar entre 0 y 10.');
-                                    } else {
-                                        this.#listado_x[indice_para_calificaciones][3].push(nota_individual);
-                                        contador++;
-                                        salir_individual = true;
-                                    }
-                                } catch (error) {
-                                    console.log('Formato de nota no válido. Intenta de nuevo.');
-                                }
-                            } while (!salir_individual);
-                            if (contador == notas_a_introducir) {
-                                salir_principal = true;
-                            }
-
-                        }
-
-
-                    } catch (error) {
-                        console.log('Error al introducir las calificaciones. Intenta de nuevo.');
-                    }
-                } while (!salir_principal);
+                break;
             }
         }
 
-        if (indice_para_calificaciones == null) {
-            console.log('no existe esa asignatura o alumno en el listado de matriculaciones');
+        if (indice_para_calificaciones === null) {
+            document.getElementById("mostrar_resultados").innerHTML = '<p>No existe esa asignatura o alumno en el listado de matriculaciones</p>';
+            return;
         }
+
+        // Crear el formulario dinámico
+        const mostrar_Resultados = document.getElementById("mostrar_resultados");
+        mostrar_Resultados.innerHTML = `
+            <form id="formulario_nota">
+                <label for="nota">Introduce la nota:</label>
+                <input type="number" id="nota" name="nota" min="0" max="10" required>
+                <button type="submit">Enviar</button>
+            </form>
+        `;
+
+        document.getElementById("formulario_nota").addEventListener("submit", (event) => {
+            event.preventDefault();
+            let nota = parseInt(document.getElementById("nota").value);
+            this.#listado_x[indice_para_calificaciones][3].push(nota);
+            mostrar_Resultados.innerHTML += '<p>Nota agregada con éxito.</p>';
+        });
     }
 
     
@@ -520,80 +533,80 @@ ya que x representa todo lo que puede guardar, desde alumnos, hasta notas a mane
     finalmente se comprueba si las notas coinciden con array pop en un bucle inverso (ya que pop extra la última)
     Si las notas x coindicen en posicion en los array se sabe que se ha hecho bien
      *
-     * @param {*} id id del alumno a testear
-     * @param {*} asignatura nombre de la asignatura a testear
-     */
-    test_meter_notas(id, asignatura) {
-        console.log('Prueba de funcionalidad para meter notas');
-        let array_notas_nuevas = [];
-        let contador = 0;
-        let indice_para_calificaciones = null;
-        let notas_a_introducir;
-        let salir_principal = false;
+    //  * @param {*} id id del alumno a testear
+    //  * @param {*} asignatura nombre de la asignatura a testear
+    //  */
+    // test_meter_notas(id, asignatura) {
+    //     console.log('Prueba de funcionalidad para meter notas');
+    //     let array_notas_nuevas = [];
+    //     let contador = 0;
+    //     let indice_para_calificaciones = null;
+    //     let notas_a_introducir;
+    //     let salir_principal = false;
 
-        if (id === null || asignatura === null) {
-            console.log('Uno de tus parámetros es nulo');
-        } else {
-            console.log('Espacio para introducir notas, como el código general');
-            for (let i = 0; i < this.#listado_x.length; i++) {
-                if (this.#listado_x[i][0].id === id && this.#listado_x[i][1].nombre === asignatura) {
-                    indice_para_calificaciones = i;
-                }
-            }
+    //     if (id === null || asignatura === null) {
+    //         console.log('Uno de tus parámetros es nulo');
+    //     } else {
+    //         console.log('Espacio para introducir notas, como el código general');
+    //         for (let i = 0; i < this.#listado_x.length; i++) {
+    //             if (this.#listado_x[i][0].id === id && this.#listado_x[i][1].nombre === asignatura) {
+    //                 indice_para_calificaciones = i;
+    //             }
+    //         }
 
-            if (indice_para_calificaciones === null) {
-                console.log('No está el alumno o la asignatura en el listado');
-            } else {
-                console.log('Comprobación de introducción de notas');
-                do {
-                    try {
-                        notas_a_introducir = parseInt(prompt('¿Cuántas notas vas a introducir?'));
-                        if (isNaN(notas_a_introducir) || notas_a_introducir <= 0) {
-                            console.log('Introduce un número válido de notas.');
-                        } else {
-                            for (let i = 0; i < notas_a_introducir; i++) {
-                                let salir_individual = false;
-                                do {
-                                    try {
-                                        let nota_individual = parseInt(prompt(`Introduce la nota ${i + 1}:`));
-                                        if (isNaN(nota_individual) || nota_individual < 0 || nota_individual > 10) {
-                                            console.log('La nota debe estar entre 0 y 10.');
-                                        } else {
-                                            array_notas_nuevas.push(nota_individual);
-                                            this.#listado_x[indice_para_calificaciones][3].push(nota_individual);
-                                            contador++;
-                                            salir_individual = true;
-                                        }
-                                    } catch (error) {
-                                        console.log('Formato de nota no válido. Intenta de nuevo.');
-                                    }
-                                } while (!salir_individual);
-                            }
-                            if (contador == notas_a_introducir) {
-                                salir_principal = true;
-                            }
-                        }
-                    } catch (error) {
-                        console.log('Error al introducir las calificaciones. Intenta de nuevo.');
-                    }
-                } while (!salir_principal);
-            }
+    //         if (indice_para_calificaciones === null) {
+    //             console.log('No está el alumno o la asignatura en el listado');
+    //         } else {
+    //             console.log('Comprobación de introducción de notas');
+    //             do {
+    //                 try {
+    //                     notas_a_introducir = parseInt(prompt('¿Cuántas notas vas a introducir?'));
+    //                     if (isNaN(notas_a_introducir) || notas_a_introducir <= 0) {
+    //                         console.log('Introduce un número válido de notas.');
+    //                     } else {
+    //                         for (let i = 0; i < notas_a_introducir; i++) {
+    //                             let salir_individual = false;
+    //                             do {
+    //                                 try {
+    //                                     let nota_individual = parseInt(prompt(`Introduce la nota ${i + 1}:`));
+    //                                     if (isNaN(nota_individual) || nota_individual < 0 || nota_individual > 10) {
+    //                                         console.log('La nota debe estar entre 0 y 10.');
+    //                                     } else {
+    //                                         array_notas_nuevas.push(nota_individual);
+    //                                         this.#listado_x[indice_para_calificaciones][3].push(nota_individual);
+    //                                         contador++;
+    //                                         salir_individual = true;
+    //                                     }
+    //                                 } catch (error) {
+    //                                     console.log('Formato de nota no válido. Intenta de nuevo.');
+    //                                 }
+    //                             } while (!salir_individual);
+    //                         }
+    //                         if (contador == notas_a_introducir) {
+    //                             salir_principal = true;
+    //                         }
+    //                     }
+    //                 } catch (error) {
+    //                     console.log('Error al introducir las calificaciones. Intenta de nuevo.');
+    //                 }
+    //             } while (!salir_principal);
+    //         }
 
-            // Comprobación de notas
-            console.log('Espacio para comprobar notas');
-            console.log('Notas almacenadas en el listado:', this.#listado_x[indice_para_calificaciones][3]);
-            console.log('Notas introducidas:', array_notas_nuevas);
+    //         // Comprobación de notas
+    //         console.log('Espacio para comprobar notas');
+    //         console.log('Notas almacenadas en el listado:', this.#listado_x[indice_para_calificaciones][3]);
+    //         console.log('Notas introducidas:', array_notas_nuevas);
 
-            //Se comprueban las notas comprobando reduciendo -1 ya que parte de 0
-            for (let index = array_notas_nuevas.length - 1; index >= 0; index--) {
-                if (this.#listado_x[indice_para_calificaciones][3].pop() === array_notas_nuevas.pop()) {
-                    console.log('Nota correcta en la posición ' + index);
-                } else {
-                    console.log('Nota incorrecta en la posición ' + index);
-                }
-            }
-        }
-    }
+    //         //Se comprueban las notas comprobando reduciendo -1 ya que parte de 0
+    //         for (let index = array_notas_nuevas.length - 1; index >= 0; index--) {
+    //             if (this.#listado_x[indice_para_calificaciones][3].pop() === array_notas_nuevas.pop()) {
+    //                 console.log('Nota correcta en la posición ' + index);
+    //             } else {
+    //                 console.log('Nota incorrecta en la posición ' + index);
+    //             }
+    //         }
+    //     }
+    // }
 
 
 
@@ -607,11 +620,14 @@ ya que x representa todo lo que puede guardar, desde alumnos, hasta notas a mane
        */
       
     listado_asignatura_por_alumno(id) {
-        console.log('Listado de asignaturas por alumno: ');
+        let listado = '<li>Listado de asignaturas por alumno:</li> <ul>';
+        
         for (let i = 0; i < this.#listado_x.length; i++) {
             if (this.#listado_x[i][0].id === id) {
-                console.log(this.#listado_x[i][1].nombre);
+                listado += `<li>${this.#listado_x[i][1].nombre}</li>`;
+                
             }
+            listado += "</ul>";
         }
 
     }
@@ -631,36 +647,30 @@ ya que x representa todo lo que puede guardar, desde alumnos, hasta notas a mane
         let indice_asignatura = -1;
         let suma = 0;
         let media;
-
+        let mensaje = '';
 
         if (id.trim() === '' || asignatura.trim() === '') {
-            console.log('Parámetros vacíos');
+            mensaje = '<p>Parámetros vacíos</p>';
+            document.getElementById("mostrar_resultados").innerHTML = mensaje;
             return null;
         } else {
-
             for (let i = 0; i < this.#listado_x.length; i++) {
                 if (this.#listado_x[i][0].id === id && this.#listado_x[i][1].nombre === asignatura) {
                     indice_asignatura = i;
-                    //aunque no se recomiende break, por dejarlo de otra manera hecha´.
                     break;
                 }
             }
 
             if (indice_asignatura === -1) {
-                console.log('No existe ese id de alumno o la asignatura');
+                mensaje = '<p>No existe ese id de alumno o la asignatura</p>';
+                document.getElementById("mostrar_resultados").innerHTML = mensaje;
                 return null;
             } else {
-                // Aquí se va sumando según indice
                 for (let i = 0; i < this.#listado_x[indice_asignatura][3].length; i++) {
                     suma += this.#listado_x[indice_asignatura][3][i];
                 }
 
-                // Aquí se ve el promedio
                 media = Math.round(suma / this.#listado_x[indice_asignatura][3].length);
-
-                // Estos mensajes comentados sirven para adornar la salida, pero no termina de funcionar para la media general.
-                // const mensaje = `Promedio de notas para ${id} en la asignatura ${asignatura}: ${media}`;
-                // console.log(mensaje);
                 return media;
             }
         }
@@ -682,19 +692,14 @@ ya que x representa todo lo que puede guardar, desde alumnos, hasta notas a mane
         let suma_promedios = 0;
         let media_promedios = 0;
         let contador_asignaturas = 0;
+        let mensaje = '';
 
-
-        if (id.trim === '' || id === null) {
-
+        if (id.trim() === '' || id === null) {
+            return null;
         } else {
             for (let i = 0; i < this.#listado_x.length; i++) {
-
                 if (this.#listado_x[i][0].id === id) {
-
-                    let promedio_asignatura = this.promedio_notas_indidivuales_asignatura(
-                        this.#listado_x[i][0].id,
-                        this.#listado_x[i][1].nombre
-                    );
+                    let promedio_asignatura = this.promedio_notas_indidivuales_asignatura(this.#listado_x[i][0].id, this.#listado_x[i][1].nombre);
 
                     if (promedio_asignatura !== null) {
                         suma_promedios += promedio_asignatura;
@@ -704,15 +709,14 @@ ya que x representa todo lo que puede guardar, desde alumnos, hasta notas a mane
             }
 
             if (contador_asignaturas === 0) {
-                console.log("No se encontraron asignaturas para este alumno.");
+                mensaje = '<p>No se encontraron asignaturas para este alumno.</p>';
+                document.getElementById("mostrar_resultados").innerHTML = mensaje;
                 return null;
             } else {
                 media_promedios = suma_promedios / contador_asignaturas;
                 return media_promedios;
             }
         }
-
-
     }
 
 
@@ -727,9 +731,12 @@ ya que x representa todo lo que puede guardar, desde alumnos, hasta notas a mane
     promedio_notas_asignatura(asignatura) {
         let suma_calificaciones = 0;
         let total_calificaciones = 0;
+        let mensaje='';
 
         if (asignatura === null || asignatura.trim() === '') {
-            console.log('asignatura vacia');
+            mensaje='<p>Asignatura vacía</p>';
+            document.getElementById("mostrar_resultados").innerHTML = mensaje;
+            
         } else {
             for (let i = 0; i < this.#listado_x.length; i++) {
                 if (this.#listado_x[i][1].nombre === asignatura) {
@@ -741,11 +748,13 @@ ya que x representa todo lo que puede guardar, desde alumnos, hasta notas a mane
             }
 
             if (total_calificaciones === 0) {
-                console.log("No se encontraron calificaciones para la asignatura:", asignatura);
+                mensaje='<p>No se encontraron calificaciones para la asignatura</p>';
+                document.getElementById("mostrar_resultados").innerHTML = mensaje;
+                
             } else {
                 let promedio = Math.round(suma_calificaciones / total_calificaciones);
-
-                console.log(`Promedio de la asignatura general ${asignatura}: ` + promedio);
+                mensaje=`<p>Promedio de la asignatura general ${asignatura}: ${promedio}</p>`;
+                document.getElementById("mostrar_resultados").innerHTML = mensaje;
             }
 
         }
@@ -764,6 +773,7 @@ ya que x representa todo lo que puede guardar, desde alumnos, hasta notas a mane
         let contador_alumnos = 0;
         let sumar_promedios = 0;
         let contador_ids = [];
+        let mensaje='';
 
         for (let i = 0; i < this.#listado_x.length; i++) {
             let id = this.#listado_x[i][0].id;
@@ -779,7 +789,9 @@ ya que x representa todo lo que puede guardar, desde alumnos, hasta notas a mane
         }
 
         if (contador_alumnos === 0) {
-            console.log('No hay alumnos en el listado');
+            mensaje='<p>No hay alumnos en el listado</p>';
+            document.getElementById("mostrar_resultados").innerHTML = mensaje;
+            
 
         }
         let media_alumnos_general = Math.round(sumar_promedios / contador_alumnos);
@@ -803,32 +815,30 @@ ya que x representa todo lo que puede guardar, desde alumnos, hasta notas a mane
         let combinaciones_repetidas = [];
         let alumno_repetido = false;
         let nombre_alumno = '';
+        let mensaje = '';
 
         for (let i = 0; i < this.#listado_x.length; i++) {
             if (this.#listado_x[i][0].id === id) {
                 if (!alumno_repetido) {
                     alumno_repetido = true;
                     nombre_alumno = this.#listado_x[i][0].nombre;
-                    console.log('Alumno  : ' + nombre_alumno + ' || Promedio general: ' + this.promedio_notas_alumno(this.#listado_x[i][0].id));
+                    mensaje += `<p>Alumno: ${nombre_alumno} || Promedio general: ${this.promedio_notas_alumno(this.#listado_x[i][0].id)}</p>`;
                 }
 
-                //Esto se puede declarar al principio, pero por hacerlo distinto.
                 let combinacion = [this.#listado_x[i][0].id, this.#listado_x[i][1].nombre];
 
-                // Imprimir solo si la combinación no está en el array.
                 if (!combinaciones_repetidas.some(a => a[0] === combinacion[0] && a[1] === combinacion[1])) {
-                    console.log('|| Asignatura: ' + this.#listado_x[i][1].nombre +
-                        ' || Calificaciones : ' + this.#listado_x[i][3] +
-                        ' || Promedio : ' + this.promedio_notas_indidivuales_asignatura(this.#listado_x[i][0].id, this.#listado_x[i][1].nombre) +
-                        ' || Fecha  matriculacion : ' + this.#listado_x[i][2]);
+                    mensaje += `<p>||Asignatura: ${this.#listado_x[i][1].nombre} || Calificaciones : ${this.#listado_x[i][3]} || Promedio : ${this.promedio_notas_indidivuales_asignatura(this.#listado_x[i][0].id, this.#listado_x[i][1].nombre)} || Fecha matriculacion : ${this.#listado_x[i][2]}</p>`;
                     combinaciones_repetidas.push(combinacion);
                 }
             }
         }
 
         if (!alumno_repetido) {
-            console.log('Error, no se ha encontrado el alumno.');
+            mensaje = '<p>No se ha encontrado el alumno</p>';
         }
+
+        document.getElementById("mostrar_resultados").innerHTML = mensaje;
     }
 
      /**

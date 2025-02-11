@@ -25,6 +25,7 @@ const listado_matriculas = new Listados([
 let listado_desmatriculaciones = new Listados([[estudiante_3, asignatura_2, "22-01-1998", '22-02-2007']]);
 
 document.getElementById('ejecutar').addEventListener('click', () => {
+    document.getElementById('ejecutar').style.display = 'none';
     mostrar_menu();
 });
 
@@ -62,7 +63,7 @@ function mostrar_menu() {
     `;
 
     document.getElementById("formulario_main").addEventListener("submit", function(event) {
-        event.preventDefault();
+        event.preventDefault();        
         opcion_seleccionada(); 
     });
 }
@@ -88,6 +89,7 @@ function opcion_seleccionada() {
 
         case 3:
             mostrar_Resultados.innerHTML = `<p>Ver listado de matriculaciones.</p>`;
+            listado_matriculas.mostrar_matriculaciones();
             break;
 
         case 4:
@@ -207,4 +209,9 @@ function opcion_seleccionada() {
             mostrar_Resultados.innerHTML = `<p>No existe esa opción del menú.</p>`;
             break;
     }
+
+    mostrar_Resultados.innerHTML += `<button id="volver">Volver</button>`;
+    document.getElementById('volver').addEventListener('click', () => {
+        mostrar_menu();
+    });
 }
