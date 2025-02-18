@@ -1,5 +1,7 @@
+import BD from './BD.js';
 import Asignatura from "./Asignaturas.js";
 import Estudiante from './Estudiantes.js';
+import Funciones from './Funciones.js';
 
 class Listados {
     #listado_x;
@@ -44,18 +46,53 @@ ya que x representa todo lo que puede guardar, desde alumnos, hasta notas a mane
      *
      * @param {object} alumno objeto de tipo Estudiante
      */
-    agregar_alumno_listado(alumno) {
+    eliminar_alumno_listado(id) {
         const mostrar_Resultados = document.getElementById("mostrar_resultados");
-        if (this.#listado_x.some(a => a.id === alumno.id)) {
-            mostrar_Resultados.innerHTML = "<p>El alumno ya está en el listado</p>";
-        } else {
-            this.#listado_x.push(alumno);
-            mostrar_Resultados.innerHTML = `<p>Alumno agregado: ${alumno.nombre}</p>`;
-
-            //Se deja comentado ya que no se ha explicado el método, pero en resumen muestra el listado de alumnos.
-            // this.mostrar_listado_alumnos();
+        const listado_alumnos = BD.recoger_datos("listado_alumnos");
+        const listado_matriculas = BD.recoger_datos("listado_matriculas");
+        
+        let indice_para_borrar = -1;
+    
+        // Buscar el índice del alumno a eliminar
+        for (let i = 0; i < listado_alumnos.length; i++) {
+            if (listado_alumnos[i].id === id) {
+                indice_para_borrar = i;
+                break;
+            }
         }
+    
+        if (indice_para_borrar === -1) {
+            mostrar_Resultados.innerHTML = `
+                <p>No existe el alumno en el listado</p>
+                <button id="volver">Volver</button>
+            `;
+        } else {
+            // Eliminar al alumno del listado (solo el elemento en el índice encontrado)
+            listado_alumnos.splice(indice_para_borrar, 1);
+            mostrar_Resultados.innerHTML = `
+                <p>Alumno borrado con éxito</p>
+                <button id="volver">Volver</button>
+            `;
+    
+            // Eliminar matriculaciones correspondientes al alumno
+            for (let i = listado_matriculas.length - 1; i >= 0; i--) {
+                if (listado_matriculas[i].estudiante.id === id) {
+                    listado_matriculas.splice(i, 1);
+                }
+            }
+    
+            // Actualizar base de datos
+            BD.guardar_datos("listado_alumnos", listado_alumnos);
+            BD.guardar_datos("listado_matriculas", listado_matriculas);
+        }
+    
+        // Agregar el listener para el botón "Volver"
+        document.getElementById("volver").addEventListener("click", () => {
+            mostrar_menu();  // Función que muestra el menú, que deberías definir
+        });
     }
+    
+    
 
     
     /**
@@ -73,29 +110,43 @@ ya que x representa todo lo que puede guardar, desde alumnos, hasta notas a mane
      * @param {string} id id del alumno a eliminar
      * @param {object} lista_matricula objeto listado de matriculaciones
      */
-    eliminar_alumno_listado(id, lista_matricula) {
+    eliminar_alumno_listado(id) {
         const mostrar_Resultados = document.getElementById("mostrar_resultados");
+        const listado_alumnos = BD.recoger_datos("listado_alumnos");
+        const listado_matriculas = BD.recoger_datos("listado_matriculas");
+    
         let indice_para_borrar = -1;
-
-        for (let i = 0; i < this.#listado_x.length; i++) {
-            if (this.#listado_x[i].id === id) {
+    
+        // Buscar el índice del alumno a eliminar
+        for (let i = 0; i < listado_alumnos.length; i++) {
+            if (listado_alumnos[i].id === id) {
                 indice_para_borrar = i;
+                break;
             }
         }
-
+    
         if (indice_para_borrar === -1) {
             mostrar_Resultados.innerHTML = "<p>No existe el alumno en el listado</p>";
         } else {
-            this.#listado_x.splice(indice_para_borrar, 1);
+            // Eliminar al alumno del listado (solo el elemento en el índice encontrado)
+            listado_alumnos.splice(indice_para_borrar, 1);
             mostrar_Resultados.innerHTML = "<p>Alumno borrado con éxito</p>";
-
-            for (let i = lista_matricula.#listado_x.length - 1; i >= 0; i--) {
-                if (lista_matricula.#listado_x[i][0].id === id) {
-                    lista_matricula.#listado_x.splice(i, 1);
+    
+            // Eliminar matriculaciones correspondientes al alumno
+            for (let i = listado_matriculas.length - 1; i >= 0; i--) {
+                if (listado_matriculas[i].estudiante.id === id) {
+                    listado_matriculas.splice(i, 1); // Eliminar matricula del alumno
                 }
             }
+    
+            // Ahora actualizamos la base de datos eliminando solo el alumno y sus matriculaciones
+            BD.guardar_datos("listado_alumnos", listado_alumnos);
+            BD.guardar_datos("listado_matriculas", listado_matriculas);
         }
     }
+    
+    
+    
 
 
 
@@ -106,15 +157,31 @@ ya que x representa todo lo que puede guardar, desde alumnos, hasta notas a mane
       *@param {object} asignatura objeto de tipo Asignatura      *
       */
      
-    agregar_asignatura_listado(asignatura) {
+      agregar_alumno_listado(alumno) {
         const mostrar_Resultados = document.getElementById("mostrar_resultados");
-        if (this.#listado_x.some(a => a.nombre === asignatura.nombre)) {
-            mostrar_Resultados.innerHTML = "<p>La asignatura ya está en el listado</p>";
+        
+        if (this.#listado_x.some(a => a.id === alumno.id)) {
+            mostrar_Resultados.innerHTML = `
+                <p>El alumno ya está en el listado</p>
+                <button id="volver">Volver</button>`
+            ;
         } else {
-            this.#listado_x.push(asignatura);
-            mostrar_Resultados.innerHTML = `<p>Asignatura agregada: ${asignatura.nombre}</p>`;
-            this.mostrar_listado_asignaturas();
+            this.#listado_x.push(alumno);
+            BD.guardar_datos("listado_alumnos", this.#listado_x.map(est => ({
+                id: est.id,
+                nombre: est.nombre
+            })));
+    
+            mostrar_Resultados.innerHTML = `
+                <p>Alumno agregado: ${alumno.nombre}</p>
+                <button id="volver">Volver</button>`
+            ;
         }
+    
+        // Agregar el listener después de insertar el botón en el DOM
+        document.getElementById("volver").addEventListener("click", () => {
+            mostrar_menu();
+        });
     }
 
      /**
@@ -122,29 +189,58 @@ ya que x representa todo lo que puede guardar, desde alumnos, hasta notas a mane
       *@param {string} asignatura nombre de la asignatura a eliminar
       * @param {object} lista_matriculas objeto listado de matriculaciones
       */     
-    eliminar_asignatura_listado(asignatura, lista_matriculas) {
+      eliminar_alumno_listado(id) {
         const mostrar_Resultados = document.getElementById("mostrar_resultados");
+    
+        // Recoger los datos desde el localStorage usando la función de BD
+        let listado_alumnos = BD.recoger_datos("listado_alumnos");
+        let listado_matriculas = BD.recoger_datos("listado_matriculas");
+    
+        if (!listado_alumnos || !listado_matriculas) {
+            mostrar_Resultados.innerHTML = "<p>No hay datos disponibles</p>";
+            return;
+        }
+    
         let indice_para_borrar = -1;
-
-        for (let i = 0; i < this.#listado_x.length; i++) {
-            if (this.#listado_x[i].nombre === asignatura) {
+    
+        // Buscar el índice del alumno a eliminar en el listado de alumnos
+        for (let i = 0; i < listado_alumnos.length; i++) {
+            if (listado_alumnos[i].id === id) {
                 indice_para_borrar = i;
+                break;
             }
         }
-
+    
         if (indice_para_borrar === -1) {
-            mostrar_Resultados.innerHTML = "<p>No existe esa asignatura en el listado</p>";
+            mostrar_Resultados.innerHTML = "<p>No existe el alumno en el listado</p>";
         } else {
-            this.#listado_x.splice(indice_para_borrar, 1);
-            mostrar_Resultados.innerHTML = "<p>Asignatura borrada con éxito</p>";
-
-            for (let i = lista_matriculas.#listado_x.length - 1; i >= 0; i--) {
-                if (lista_matriculas.#listado_x[i][1].nombre === asignatura) {
-                    lista_matriculas.#listado_x.splice(i, 1);
+            // Eliminar al alumno del listado
+            listado_alumnos.splice(indice_para_borrar, 1); // Eliminamos el alumno de la lista
+    
+            // Eliminar matriculaciones correspondientes al alumno
+            for (let i = listado_matriculas.length - 1; i >= 0; i--) {
+                if (listado_matriculas[i].estudiante.id === id) { // Comprobar si el ID coincide con el estudiante
+                    listado_matriculas.splice(i, 1); // Eliminar matricula del alumno
                 }
             }
+    
+            // Guardar los datos actualizados sin perder las propiedades privadas
+            BD.guardar_datos("listado_alumnos", listado_alumnos); // Guardamos los datos completos sin perder las propiedades
+            BD.guardar_datos("listado_matriculas", listado_matriculas);
+    
+            // Mostrar mensaje de éxito y el botón "Volver"
+            mostrar_Resultados.innerHTML = "<p>Alumno borrado con éxito</p>";
+            mostrar_Resultados.innerHTML += `
+                <button id="volver">Volver</button>
+            `;
+    
+            // Agregar el listener después de insertar el botón en el DOM
+            document.getElementById("volver").addEventListener("click", () => {
+                mostrar_menu(); // Esta función muestra el menú de opciones
+            });
         }
     }
+    
 
     /**
      * Metodo para buscar un patron de texto que coincida parcialmente.
@@ -157,23 +253,43 @@ ya que x representa todo lo que puede guardar, desde alumnos, hasta notas a mane
      * @param {string} busqueda nombre de la asignatura a buscar
      */
     buscar_asignatura(busqueda) {
-        const mostrar_Resultados = document.getElementById("mostrar_resultados");
-        let contador = 0;
-        let buscar = new RegExp(busqueda, 'i');
+        const contenedor = document.getElementById("mostrar_resultados");
+    
+        // Recupera el listado actualizado de alumnos desde la BD
+        this.#listado_x = BD.recoger_datos("listado_asignaturas");
+    
+        // Crea un contenedor para los resultados si no existe
+        let resultados = document.getElementById("resultados_busqueda");
+        if (!resultados) {
+            resultados = document.createElement("div");
+            resultados.id = "resultados_busqueda";
+            contenedor.appendChild(resultados);
+        }
+    
+        // Verifica que el listado y la búsqueda sean válidos
         if (this.#listado_x.length === 0 || busqueda.trim() === "") {
-            mostrar_Resultados.innerHTML = "<p>El listado de asignaturas está vacío o no has escrito bien la cadena</p>";
-        } else {
-            this.#listado_x.forEach(a => {
-                if (buscar.test(a.nombre)) {
-                    mostrar_Resultados.innerHTML += `<p>Asignatura encontrada: ${a.nombre}</p>`;
-                    contador++;
-                }
-            });
-            if (contador === 0) {
-                mostrar_Resultados.innerHTML = "<p>No existe esa asignatura en el listado</p>";
+            resultados.innerHTML = "<p>Error: Listado vacío o búsqueda inválida</p>";
+            return;
+        }
+    
+        // Crea la expresión regular para una búsqueda sin distinción de mayúsculas/minúsculas
+        const patron = new RegExp(busqueda, 'i');
+        resultados.innerHTML = "";  // Limpia resultados previos
+        let contador = 0;
+    
+        // Recorre el listado y muestra los alumnos que coincidan
+        this.#listado_x.forEach(asignatura => {
+            if (patron.test(asignatura.nombre)) {
+                resultados.innerHTML += `<p>${asignatura.nombre}</p>`;
+                contador++;
             }
+        });
+    
+        if (contador === 0) {
+            resultados.innerHTML = "<p>No se encontraron asignaturas</p>";
         }
     }
+    
 
     
     /**
@@ -181,32 +297,53 @@ ya que x representa todo lo que puede guardar, desde alumnos, hasta notas a mane
      *
      * @param {string} busqueda cadena a buscar 
      */
-    buscar_alumnos(busqueda) {
-        const mostrar_Resultados = document.getElementById("mostrar_resultados");
-        let contador = 0;
-        let buscar = new RegExp(busqueda, 'i');
+    buscar_alumno(busqueda) {
+        const contenedor = document.getElementById("mostrar_resultados");
+    
+        // Recupera el listado actualizado de alumnos desde la BD
+        this.#listado_x = BD.recoger_datos("listado_alumnos");
+    
+        // Crea un contenedor para los resultados si no existe
+        let resultados = document.getElementById("resultados_busqueda");
+        if (!resultados) {
+            resultados = document.createElement("div");
+            resultados.id = "resultados_busqueda";
+            contenedor.appendChild(resultados);
+        }
+    
+        // Verifica que el listado y la búsqueda sean válidos
         if (this.#listado_x.length === 0 || busqueda.trim() === "") {
-            mostrar_Resultados.innerHTML = "<p>El listado de alumnos está vacío o no has escrito bien la cadena</p>";
-        } else {
-            this.#listado_x.forEach(a => {
-                if (buscar.test(a.nombre)) {
-                    mostrar_Resultados.innerHTML += `<p>Alumno encontrado: ${a.nombre}</p>`;
-                    contador++;
-                }
-            });
-            if (contador === 0) {
-                mostrar_Resultados.innerHTML = "<p>No existe ese alumno en el listado</p>";
+            resultados.innerHTML = "<p>Error: Listado vacío o búsqueda inválida</p>";
+            return;
+        }
+    
+        // Crea la expresión regular para una búsqueda sin distinción de mayúsculas/minúsculas
+        const patron = new RegExp(busqueda, 'i');
+        resultados.innerHTML = "";  // Limpia resultados previos
+        let contador = 0;
+    
+        // Recorre el listado y muestra los alumnos que coincidan
+        this.#listado_x.forEach(alumno => {
+            if (patron.test(alumno.nombre)) {
+                resultados.innerHTML += `<p>${alumno.nombre}</p>`;
+                contador++;
             }
+        });
+    
+        if (contador === 0) {
+            resultados.innerHTML = "<p>No se encontraron alumnos</p>";
         }
     }
-
-
+    
     
     /** Metodo para ver el listado completo de alumnos.
     Con un condicional se comprueba si el listado está vacío indicando que lo está y
     sino se hace un foreach con los nombres de los alumnos. */
     mostrar_listado_alumnos() {
-        const mostrar_Resultados = document.getElementById("mostrar_resultados");
+        const mostrar_Resultados = document.getElementById("mostrar_resultados");        
+        let datos = BD.recoger_datos("listado_alumnos");
+        this.#listado_x = datos;
+        
         if (this.#listado_x.length === 0) {
             mostrar_Resultados.innerHTML = "<p>El listado está vacío</p>";
         } else {
@@ -219,10 +356,12 @@ ya que x representa todo lo que puede guardar, desde alumnos, hasta notas a mane
         }
     }
 
+
     
     /** Metodo para ver el listado de asignaturas, que es exactamente igual al anterior */
     mostrar_listado_asignaturas() {
         const mostrar_Resultados = document.getElementById("mostrar_resultados");
+        let datos = BD.recoger_datos("listado_asignaturas");
         if (this.#listado_x.length === 0) {
             document.getElementById("mostrar_resultados").innerHTML = "<p>El listado está vacío</p>";
             
@@ -240,43 +379,39 @@ ya que x representa todo lo que puede guardar, desde alumnos, hasta notas a mane
     posicion lo que busca */
     mostrar_matriculaciones() {
         const mostrar_Resultados = document.getElementById("mostrar_resultados");
-
-        if (this.#listado_x.length == 0) {
-            let listado = "<p>Listado de matriculaciones vacio</p> <ul>";
-            document.getElementById("mostrar_resultados").innerHTML = listado
-
+        let datos = BD.recoger_datos("listado_matriculas");
+        this.#listado_x = datos;
+    
+        if (this.#listado_x.length === 0) {
+            mostrar_Resultados.innerHTML = "<p>Listado de matriculaciones vacío</p>";
         } else {
             let listado = "<p>Listado de matriculaciones: </p> <ul>";
-            
-            for (let i = 0; i < this.#listado_x.length; i++) {
-                listado += `<li>Alumno: ${this.#listado_x[i][0].nombre} - Asignatura: ${this.#listado_x[i][1].nombre} - Fecha matriculación: ${this.#listado_x[i][2]}</li>`;
-                
-            }
+            this.#listado_x.forEach(matricula => {
+                listado += `<li>- ID: ${matricula.estudiante.id} -Alumno: ${matricula.estudiante.nombre} - Asignatura: ${matricula.asignatura.nombre} - Fecha matriculación: ${matricula.fecha}</li>`;
+            });
             listado += "</ul>";
             mostrar_Resultados.innerHTML = listado;
         }
-
-    };
+    }
 
     
     /** Metodo para ver las desmatriculaciones. Es igual al anterior, pero solo busca en la lista de desmatriculaciones. */
     mostrar_desmatriculaciones() {
-        
-        if (this.#listado_x.length == 0) {
-            let listado="<p>Listado de desmatriculaciones vacio</p> <ul>";
-            document.getElementById("mostrar_resultados").innerHTML = listado
-
+        const mostrar_Resultados = document.getElementById("mostrar_resultados");
+        let datos = BD.recoger_datos("listado_desmatriculaciones");
+        this.#listado_x = datos;
+    
+        if (this.#listado_x.length === 0) {
+            mostrar_Resultados.innerHTML = "<p>Listado de desmatriculaciones vacío</p>";
         } else {
             let listado = "<p>Listado de desmatriculaciones: </p> <ul>";
-            
-            for (let i = 0; i < this.#listado_x.length; i++) {
-                listado += `<li>Alumno: ${this.#listado_x[i][0].nombre} - Asignatura: ${this.#listado_x[i][1].nombre} - Fecha matriculación: ${this.#listado_x[i][2]} - Fecha desmatriculación: ${this.#listado_x[i][3]}</li>`;
-                
-            }
+            this.#listado_x.forEach(desmatriculacion => {
+                listado += `<li>Alumno: ${desmatriculacion.estudiante.nombre} - Asignatura: ${desmatriculacion.asignatura.nombre} - Fecha matriculación: ${desmatriculacion.fecha_inicio} - Fecha desmatriculación: ${desmatriculacion.fecha_fin}</li>`;
+            });
             listado += "</ul>";
-            document.getElementById("mostrar_resultados").innerHTML = listado;
+            mostrar_Resultados.innerHTML = listado;
         }
-    };
+    }
 
 
     
@@ -296,61 +431,52 @@ ya que x representa todo lo que puede guardar, desde alumnos, hasta notas a mane
      * @param {object} listado_alumnos  nombre del listado de alumnos para comprobar
      * @param {object} listado_asignaturas nombre del listado de asignaturas para comprobar
      */
-    matricular_alumno_asignatura(id, asignatura_nombre, listado_alumnos, listado_asignaturas) {
-        let indice_alumno = null;
-        let indice_asignatura = null;
-        //Se pone un contador para ver si está ya matriculado, ya que con indice es menos práctico.
-        let contador_matricula = 0;
-        let fecha_matriculacion = new Date();
-        let fecha_ES = fecha_matriculacion.toLocaleDateString('es-ES');
-        for (let i = 0; i < listado_alumnos.#listado_x.length; i++) {
-            if (listado_alumnos.#listado_x[i].id === id) {
-                indice_alumno = i;
-
-                //Estas linea están a modo test para comprobar si habia fallos en su implementación
-                //console.log('Exito para lista alumno');
-            }
-            //console.log('No está el alumno aquí');
-
-        }
-
-        for (let i = 0; i < listado_asignaturas.#listado_x.length; i++) {
-            if (listado_asignaturas.#listado_x[i].nombre === asignatura_nombre) {
-                indice_asignatura = i;
-                //console.log('exito para lista asignatura');
-            }
-            //console.log('No está la asignatura aquí');
-
-        }
-
-        for (let i = 0; i < this.#listado_x.length; i++) {
-            if (this.#listado_x[i][0].id === id && this.#listado_x[i][1].nombre === asignatura_nombre) {
-                contador_matricula++;
-                //console.log('Esta en matricula ya');
-
-            }
-        }
-
-        if (indice_alumno === null || indice_asignatura === null || contador_matricula !== 0) {
-            let mensaje='<p>Hay algun alumno o asignatura fuera de los listados o bien la matricula ya está hecha para ese alumno y asignatura </p>';
-            document.getElementById("mostrar_resultados").innerHTML = mensaje;
-
+     matricular_alumno_asignatura(id, asignatura_nombre) {
+        const mostrar_Resultados = document.getElementById("mostrar_resultados");
+        const listado_alumnos = BD.recoger_datos("listado_alumnos") || [];
+        const listado_asignaturas = BD.recoger_datos("listado_asignaturas") || [];
+        let listado_matriculas = BD.recoger_datos("listado_matriculas") || [];
+    
+        let alumno = listado_alumnos.find(al => al.id === id);
+        let asignatura = listado_asignaturas.find(asig => asig.nombre === asignatura_nombre);
+    
+        let fecha_matriculacion = new Date().toLocaleDateString('es-ES');
+    
+        // Verificar si el alumno ya está matriculado en la asignatura
+        let ya_matriculado = listado_matriculas.some(matricula => 
+            matricula.estudiante.id === id && matricula.asignatura.nombre === asignatura_nombre
+        );
+    
+        if (!alumno || !asignatura || ya_matriculado) {
+            mostrar_Resultados.innerHTML = `
+                <p>Error: El alumno o la asignatura no existen, o la matrícula ya está registrada.</p>
+                <button id="volver">Volver</button>
+            `;
         } else {
-            this.#listado_x.push([listado_alumnos.#listado_x[indice_alumno], listado_asignaturas.#listado_x[indice_asignatura], fecha_ES, [...listado_asignaturas.#listado_x[indice_asignatura].calificaciones]]);
-            //this.mostrar_matriculaciones();
+            // Agregar la nueva matrícula
+            listado_matriculas.push({
+                estudiante: { id: alumno.id, nombre: alumno.nombre },
+                asignatura: { nombre: asignatura.nombre, calificaciones: asignatura.calificaciones },
+                fecha: fecha_matriculacion,
+                calificaciones: [...asignatura.calificaciones]
+            });
+    
+            // Guardar en la base de datos
+            BD.guardar_datos("listado_matriculas", listado_matriculas);
+    
+            mostrar_Resultados.innerHTML = `
+                <p>Alumno ${alumno.nombre} matriculado en ${asignatura.nombre} con éxito.</p>
+                <button id="volver">Volver</button>
+            `;
         }
-
-
-        //Codigo original para hacerlo por objeto.
-        // if (!listado_asignaturas.listado_x.some(a => a._nombre === asignatura._nombre) ||
-        //     !listado_alumnos.listado_x.some(a => a.id === alumno.id)) {
-        //     console.log("La asignatura o alumno no está en el listado");
-        // } else {
-        //     this.listado_x.push([alumno, asignatura, fecha_ES]);
-        //     console.log('Matriculado con éxito');
-        //     this.mostrar_matriculaciones();
-        // }
+    
+        // Agregar el evento al botón "Volver"
+        document.getElementById("volver").addEventListener("click", () => {
+            mostrar_menu();
+        });
     }
+    
+    
 
     
     /**
@@ -492,39 +618,57 @@ ya que x representa todo lo que puede guardar, desde alumnos, hasta notas a mane
        @param {string} asignatura nombre de la asignatura a la que añadir notas        
        */
       
-    agregar_notas_matricula(id, asignatura) {
+       agregar_notas_matricula(id, asignatura) {
+        const mostrar_Resultados = document.getElementById("mostrar_resultados");
+        let listado_matriculas = BD.recoger_datos("listado_matriculas") || [];
+    
         let indice_para_calificaciones = null;
-        let mensaje = "";
-
-        for (let i = 0; i < this.#listado_x.length; i++) {
-            if (this.#listado_x[i][0].id === id && this.#listado_x[i][1].nombre === asignatura) {
+    
+        for (let i = 0; i < listado_matriculas.length; i++) {
+            if (listado_matriculas[i].estudiante.id === id && listado_matriculas[i].asignatura.nombre === asignatura) {
                 indice_para_calificaciones = i;
                 break;
             }
         }
-
+    
         if (indice_para_calificaciones === null) {
-            document.getElementById("mostrar_resultados").innerHTML = '<p>No existe esa asignatura o alumno en el listado de matriculaciones</p>';
+            mostrar_Resultados.innerHTML = `
+                <p>No existe esa asignatura o alumno en el listado de matriculaciones</p>
+                <button id="volver">Volver</button>
+            `;
+    
+            document.getElementById("volver").addEventListener("click", () => {
+                mostrar_menu();
+            });
+    
             return;
         }
-
-        // Crear el formulario dinámico
-        const mostrar_Resultados = document.getElementById("mostrar_resultados");
-        mostrar_Resultados.innerHTML = `
-            <form id="formulario_nota">
-                <label for="nota">Introduce la nota:</label>
-                <input type="number" id="nota" name="nota" min="0" max="10" required>
-                <button type="submit">Enviar</button>
-            </form>
-        `;
-
-        document.getElementById("formulario_nota").addEventListener("submit", (event) => {
-            event.preventDefault();
-            let nota = parseInt(document.getElementById("nota").value);
-            this.#listado_x[indice_para_calificaciones][3].push(nota);
-            mostrar_Resultados.innerHTML += '<p>Nota agregada con éxito.</p>';
-        });
+    
+        // Usar la función pedir_numero para mostrar el formulario
+        Funciones.pedir_numero('la nota');
+    
+        setTimeout(() => {
+            document.getElementById("formulario_numero").addEventListener("submit", (event) => {
+                event.preventDefault();
+                let nota = parseInt(document.getElementById("numero").value);
+    
+                listado_matriculas[indice_para_calificaciones].calificaciones.push(nota);
+    
+                // Guardar cambios en la base de datos
+                BD.guardar_datos("listado_matriculas", listado_matriculas);
+    
+                mostrar_Resultados.innerHTML += `
+                    <p>Nota agregada con éxito.</p>
+                    <button id="volver">Volver</button>
+                `;
+    
+                document.getElementById("volver").addEventListener("click", () => {
+                    mostrar_menu();
+                });
+            });
+        }, 0);
     }
+    
 
     
     /**
@@ -861,6 +1005,36 @@ ya que x representa todo lo que puede guardar, desde alumnos, hasta notas a mane
             }
         }
     }
+
+
+    agregar_asignatura_listado(asignatura) {
+    const mostrar_Resultados = document.getElementById("mostrar_resultados");
+
+    if (this.#listado_x.some(a => a.nombre === asignatura.nombre)) {
+        mostrar_Resultados.innerHTML = `
+            <p>La asignatura ya está en el listado</p>
+            <button id="volver">Volver</button>
+        `;
+    } else {
+        this.#listado_x.push(asignatura);
+        BD.guardar_datos("listado_asignaturas", this.#listado_x.map(asig => ({
+            nombre: asig.nombre,
+            calificaciones: asig.calificaciones
+        })));
+
+        mostrar_Resultados.innerHTML = `
+            <p>Asignatura agregada: ${asignatura.nombre}</p>
+            <button id="volver">Volver</button>
+        `;
+    }
+
+    // Agregar el listener después de insertar el botón en el DOM
+    document.getElementById("volver").addEventListener("click", () => {
+        mostrar_menu();
+    });
 }
+
+}
+
 
 export default Listados;

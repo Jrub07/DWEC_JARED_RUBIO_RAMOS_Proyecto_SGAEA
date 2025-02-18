@@ -7,23 +7,16 @@ Nueva modificacion, ahora en vez de imprimir el error por console.log ahora lanz
  * @returns {string} devuelve la cadena de texto que ha introducido el usuario
  */
 function pedir_string(texto) {
-     let  salir = false;
-    do {
-        try {
-           let cadena = prompt(`Dime qué ${texto} :`);
-        if (cadena === null || cadena.trim() === '') {
-            throw new errorPersonalizado('Error: Has dejado la cadena vacía');
-        } else {
-            salir = true;
-            return cadena;
-        } 
-        } catch (errorPersonalizado) {
-            console.log(errorPersonalizado.message);            
-        }       
-
-    } while (!salir);
-
+    const mostrar_Resultados = document.getElementById("mostrar_resultados");
+    mostrar_Resultados.innerHTML = `
+        <form id="formulario_texto" action="javascript:void(0)">
+            <label for="texto">${texto}:</label>
+            <input type="text" id="texto" name="texto" required>
+            <button type="submit">Enviar</button>
+        </form>
+    `;
 }
+
 
 
 /**
@@ -32,24 +25,17 @@ En este metodo se pide número hasta que te de el correcto evitando tanto cadena
 
 Actualizado: Añadimos error personalizado al igual que el anterior
  *
+ * @param {string} texto texto que se le pide al usuario
  * @returns {number} devuelve el número que ha introducido el usuario
  */
-function pedir_numero() {
-    let salir = false;
-    let numero;
-    do {
-        try {
-            numero = parseInt(prompt('Escribe un número que no sea menor a 0:'));
-            if (isNaN(numero) || numero<0) {
-                throw new errorPersonalizado("Error:Has introducido un numero negativo o no valido");                
-            } else {
-                salir = true;
-            }
-        } catch (errorPersonalizado) {
-            console.log(errorPersonalizado.message);
-        }
-    } while (!salir);
-    return numero;
+function pedir_numero(texto) {
+    const mostrar_Resultados = document.getElementById("mostrar_resultados");
+    mostrar_Resultados.innerHTML = `
+        <form id="formulario_numero">
+            <label for="numero">Introduce ${texto}:</label>
+            <input type="number" id="numero" name="numero" min="0" max="10" required>
+            <button type="submit">Enviar</button>
+        </form>`;
 }
 
-export default { pedir_string, pedir_numero };
+export default { pedir_string };
