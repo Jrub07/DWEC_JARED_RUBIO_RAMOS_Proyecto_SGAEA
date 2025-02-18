@@ -252,6 +252,7 @@ function opcion_seleccionada() {
             listado_matriculas.desmatricular_alumno_asignatura(id_alumno_borrar, asignatura_nombre_borrar, listado_desmatriculaciones);
             break;
 
+        //Pendiente parte backend
         case 13:            
             listado_matriculas.mostrar_matriculaciones();                       
             mostrar_Resultados.innerHTML += `
