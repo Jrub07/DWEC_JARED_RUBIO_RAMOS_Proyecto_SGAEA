@@ -99,7 +99,7 @@ function opcion_seleccionada() {
             listado_alumnos.buscar_alumno(busqueda);
           });
         }
-      }, 0);
+      }, 10);
       break;
     case 6:
       listado_alumnos.mostrar_listado_alumnos();
@@ -156,14 +156,13 @@ function opcion_seleccionada() {
             listado_alumnos.agregar_alumno_listado(estudiante_nuevo);
           });
         }
-      }, 0);
+      }, 10);
       break;
 
-    
     case 7:
-    listado_alumnos.mostrar_listado_alumnos();
-   
-    mostrar_Resultados.innerHTML = `
+      listado_alumnos.mostrar_listado_alumnos();
+
+      mostrar_Resultados.innerHTML += `
         <p>Eliminar un alumno del listado.</p>
         <form id="formulario_borrar">
             <input type="text" id="id_alumno" name="id_alumno" placeholder="ID del alumno para borrar" required>
@@ -171,36 +170,31 @@ function opcion_seleccionada() {
             <section id="resultado_borrar"></section>
         </form>
     `;
-    
-    setTimeout(() => {
+
+      setTimeout(() => {
         const formulario = document.getElementById("formulario_borrar");
         if (formulario) {
-            formulario.addEventListener("submit", (event) => {
-                event.preventDefault();
-                const id_alumno = document.getElementById("id_alumno").value.trim();
-                const resultadoBorrar = document.getElementById("resultado_borrar");
-    
-                if (id_alumno) {
-               
-                    listado_alumnos.eliminar_alumno_listado(id_alumno);
-                    
-    
-                    
-                    if (resultadoBorrar) {
-                        resultadoBorrar.innerHTML = "<p>Alumno borrado con éxito.</p>";
-                    }
-                } else {
-                    if (resultadoBorrar) {
-                        resultadoBorrar.innerHTML = "<p>Por favor, ingrese un ID válido.</p>";
-                    }
-                }
-            });
+          formulario.addEventListener("submit", (event) => {
+            event.preventDefault();
+            const id_alumno = document.getElementById("id_alumno").value.trim();
+            const resultadoBorrar = document.getElementById("resultado_borrar");
+
+            if (id_alumno) {
+              listado_alumnos.eliminar_alumno_listado(id_alumno);
+
+              if (resultadoBorrar) {
+                resultadoBorrar.innerHTML = "<p>Alumno borrado con éxito.</p>";
+              }
+            } else {
+              if (resultadoBorrar) {
+                resultadoBorrar.innerHTML =
+                  "<p>Por favor, ingrese un ID válido.</p>";
+              }
+            }
+          });
         }
-    }, 0);
-    break;
-
-
-    
+      }, 10);
+      break;
 
     case 8:
       mostrar_Resultados.innerHTML = `<p>Buscar una asignatura por texto.</p>`;
@@ -216,7 +210,7 @@ function opcion_seleccionada() {
             listado_asignaturas.buscar_asignatura(busqueda);
           });
         }
-      }, 0);
+      }, 10);
       break;
 
     case 9:
@@ -240,14 +234,14 @@ function opcion_seleccionada() {
             listado_asignaturas.agregar_asignatura_listado(asignatura_nueva);
           });
         }
-      }, 0);
+      }, 10);
 
       break;
-    
-      case 10:
-    listado_asignaturas.mostrar_listado_asignaturas();
-   
-    mostrar_Resultados.innerHTML = `
+
+    case 10:
+      listado_asignaturas.mostrar_listado_asignaturas();
+
+      mostrar_Resultados.innerHTML += `
         <p>Eliminar una asignatura del listado.</p>
         <form id="formulario_borrar_asignatura">
             <input type="text" id="nombre_asignatura" name="nombre_asignatura" placeholder="Nombre de la asignatura para borrar" required>
@@ -256,41 +250,48 @@ function opcion_seleccionada() {
         </form>
     `;
 
-    setTimeout(() => {
-        const formulario = document.getElementById("formulario_borrar_asignatura");
+      setTimeout(() => {
+        const formulario = document.getElementById(
+          "formulario_borrar_asignatura"
+        );
         if (formulario) {
-            formulario.addEventListener("submit", (event) => {
-                event.preventDefault();
-                const nombre_asignatura = document.getElementById("nombre_asignatura").value.trim();
-                const resultadoBorrar = document.getElementById("resultado_borrar_asignatura");
+          formulario.addEventListener("submit", (event) => {
+            event.preventDefault();
+            const nombre_asignatura = document
+              .getElementById("nombre_asignatura")
+              .value.trim();
+            const resultadoBorrar = document.getElementById(
+              "resultado_borrar_asignatura"
+            );
 
-                if (nombre_asignatura) {
-                   
-                    const eliminada = listado_asignaturas.eliminar_asignatura_listado(nombre_asignatura, listado_matriculas);
-                    
-                   
-                    if (resultadoBorrar) {
-                        if (eliminada) {
-                            resultadoBorrar.innerHTML = "<p>Asignatura borrada con éxito.</p>";
-                        } else {
-                            resultadoBorrar.innerHTML = "<p>No existe esa asignatura en el listado.</p>";
-                        }
-                    }
+            if (nombre_asignatura) {
+              const eliminada = listado_asignaturas.eliminar_asignatura_listado(
+                nombre_asignatura,
+                listado_matriculas
+              );
+
+              if (resultadoBorrar) {
+                if (eliminada) {
+                  resultadoBorrar.innerHTML =
+                    "<p>Asignatura borrada con éxito.</p>";
                 } else {
-                    if (resultadoBorrar) {
-                        resultadoBorrar.innerHTML = "<p>Por favor, ingrese un nombre de asignatura válido.</p>";
-                    }
+                  resultadoBorrar.innerHTML =
+                    "<p>No existe esa asignatura en el listado.</p>";
                 }
-            });
+              }
+            } else {
+              if (resultadoBorrar) {
+                resultadoBorrar.innerHTML =
+                  "<p>Por favor, ingrese un nombre de asignatura válido.</p>";
+              }
+            }
+          });
         }
-    }, 0);
-    break;
+      }, 10);
+      break;
 
-    
-
-
-    case 11: 
-      listado_matriculas.mostrar_matriculaciones();         
+    case 11:
+      listado_matriculas.mostrar_matriculaciones();
       mostrar_Resultados.innerHTML += `<p>Matricular un alumno en una asignatura.</p>
                 <form id="formulario_matricular">
                     <label for="id_alumno">ID del alumno:</label>
@@ -310,20 +311,18 @@ function opcion_seleccionada() {
               .getElementById("asignatura_nombre")
               .value.trim();
 
-           
             listado_matriculas.matricular_alumno_asignatura(
               id_alumno,
               asignatura_nombre
             );
           });
         }
-      }, 0);
+      }, 10);
       break;
 
-    
-      case 12:
-    listado_matriculas.mostrar_matriculaciones();
-    mostrar_Resultados.innerHTML += `
+    case 12:
+      listado_matriculas.mostrar_matriculaciones();
+      mostrar_Resultados.innerHTML += `
         <p>Desmatricular un alumno de una asignatura.</p>
         <form id="formulario_desmatricular">
             <label for="id_alumno">ID del alumno:</label>
@@ -335,42 +334,46 @@ function opcion_seleccionada() {
         </form>
     `;
 
-    setTimeout(() => {
+      setTimeout(() => {
         const formulario = document.getElementById("formulario_desmatricular");
         if (formulario) {
-            formulario.addEventListener("submit", (event) => {
-                event.preventDefault();
-                const id_alumno = document.getElementById("id_alumno").value.trim();
-                const asignatura_nombre = document.getElementById("asignatura_nombre").value.trim();
-                const resultadoDesmatricular = document.getElementById("resultado_desmatricular");
+          formulario.addEventListener("submit", (event) => {
+            event.preventDefault();
+            const id_alumno = document.getElementById("id_alumno").value.trim();
+            const asignatura_nombre = document
+              .getElementById("asignatura_nombre")
+              .value.trim();
+            const resultadoDesmatricular = document.getElementById(
+              "resultado_desmatricular"
+            );
 
-                if (id_alumno && asignatura_nombre) {
-                    
-                    const exito = listado_matriculas.desmatricular_alumno_asignatura(
-                        id_alumno,
-                        asignatura_nombre,
-                        listado_desmatriculaciones
-                    );
+            if (id_alumno && asignatura_nombre) {
+              const exito = listado_matriculas.desmatricular_alumno_asignatura(
+                id_alumno,
+                asignatura_nombre,
+                listado_desmatriculaciones
+              );
 
-                   
-                    if (resultadoDesmatricular) {
-                        if (exito) {
-                            resultadoDesmatricular.innerHTML = "<p>Alumno desmatriculado con éxito.</p>";
-                        } else {
-                            resultadoDesmatricular.innerHTML = "<p>No se encontró la matrícula para eliminar.</p>";
-                        }
-                    }
+              if (resultadoDesmatricular) {
+                if (exito) {
+                  resultadoDesmatricular.innerHTML =
+                    "<p>Alumno desmatriculado con éxito.</p>";
                 } else {
-                    if (resultadoDesmatricular) {
-                        resultadoDesmatricular.innerHTML = "<p>Por favor, complete todos los campos.</p>";
-                    }
+                  resultadoDesmatricular.innerHTML =
+                    "<p>No se encontró la matrícula para eliminar.</p>";
                 }
-            });
+              }
+            } else {
+              if (resultadoDesmatricular) {
+                resultadoDesmatricular.innerHTML =
+                  "<p>Por favor, complete todos los campos.</p>";
+              }
+            }
+          });
         }
-    }, 0);
-    break;
+      }, 10);
+      break;
 
-    
     case 13:
       listado_matriculas.mostrar_matriculaciones();
       mostrar_Resultados.innerHTML += `
@@ -385,39 +388,42 @@ function opcion_seleccionada() {
               <button type="submit">Agregar nota</button>
           </form>
       `;
-  
+
       setTimeout(() => {
-          const formulario = document.getElementById("formulario_notas");
-          if (formulario) {
-              formulario.addEventListener("submit", (event) => {
-                  event.preventDefault();
-                  const id_alumno = document.getElementById("id_alumno").value.trim();
-                  const asignatura_nombre = document.getElementById("asignatura_nombre").value.trim();
-                  const nota = parseInt(document.getElementById("nota").value.trim());
-  
-                  let mensajeError = document.getElementById("mensaje_error");
-  
-                  if (!mensajeError) {
-                      mensajeError = document.createElement("p");
-                      mensajeError.id = "mensaje_error";
-                      formulario.appendChild(mensajeError);
-                  }
-  
-                 
-                  if (isNaN(nota)) {
-                      mensajeError.innerHTML = "La nota debe ser un número válido.";
-                      return;
-                  }
-  
-                 
-                  mensajeError.innerHTML = "";
-  
-                  listado_matriculas.agregar_notas_matricula(id_alumno, asignatura_nombre, nota);
-              });
-          }
-      }, 0);
+        const formulario = document.getElementById("formulario_notas");
+        if (formulario) {
+          formulario.addEventListener("submit", (event) => {
+            event.preventDefault();
+            const id_alumno = document.getElementById("id_alumno").value.trim();
+            const asignatura_nombre = document
+              .getElementById("asignatura_nombre")
+              .value.trim();
+            const nota = parseInt(document.getElementById("nota").value.trim());
+
+            let mensajeError = document.getElementById("mensaje_error");
+
+            if (!mensajeError) {
+              mensajeError = document.createElement("p");
+              mensajeError.id = "mensaje_error";
+              formulario.appendChild(mensajeError);
+            }
+
+            if (isNaN(nota)) {
+              mensajeError.innerHTML = "La nota debe ser un número válido.";
+              return;
+            }
+
+            mensajeError.innerHTML = "";
+
+            listado_matriculas.agregar_notas_matricula(
+              id_alumno,
+              asignatura_nombre,
+              nota
+            );
+          });
+        }
+      }, 10);
       break;
-  
 
     case 14:
       listado_alumnos.mostrar_listado_alumnos();
@@ -451,14 +457,12 @@ function opcion_seleccionada() {
             }
           });
         }
-      }, 0);
+      }, 10);
       break;
 
     case 15:
-      
       listado_matriculas.mostrar_matriculaciones();
 
-      
       mostrar_Resultados.innerHTML += `
                     <p>Consultar promedio de un alumno por asignatura.</p>
                     <form id="formulario_promedio_asignatura">
@@ -473,7 +477,6 @@ function opcion_seleccionada() {
                     <section id="resultado_consulta"></section>
                 `;
 
-      
       setTimeout(() => {
         const formulario = document.getElementById(
           "formulario_promedio_asignatura"
@@ -503,12 +506,12 @@ function opcion_seleccionada() {
             }
           });
         }
-      }, 0);
+      }, 10);
       break;
 
-      case 16:
-            listado_asignaturas.mostrar_listado_asignaturas();
-            mostrar_Resultados.innerHTML += `
+    case 16:
+      listado_asignaturas.mostrar_listado_asignaturas();
+      mostrar_Resultados.innerHTML += `
                 <p>Consultar promedio de una asignatura.</p>
                 <form id="formulario_promedio_asignatura">
                     <label for="asignatura">Nombre de la asignatura:</label>
@@ -518,25 +521,31 @@ function opcion_seleccionada() {
                 <section id="resultado_consulta"></section>
             `;
 
-            setTimeout(() => {
-                const formulario = document.getElementById("formulario_promedio_asignatura");
-                if (formulario) {
-                    formulario.addEventListener("submit", (event) => {
-                        event.preventDefault();
-                        const asignatura = document.getElementById("asignatura").value.trim();
-                        const promedio = listado_matriculas.promedio_asignatura(asignatura);
-                        
-                        if (promedio !== null) {
-                            document.getElementById("resultado_consulta").innerHTML = `<p>El promedio de la asignatura ${asignatura} es: ${promedio}</p>`;
-                        } else {
-                            document.getElementById("resultado_consulta").innerHTML = `<p>No se encontraron calificaciones para la asignatura ${asignatura}.</p>`;
-                        }
-                    });
-                }
-            }, 0);
-            break;
+      setTimeout(() => {
+        const formulario = document.getElementById(
+          "formulario_promedio_asignatura"
+        );
+        if (formulario) {
+          formulario.addEventListener("submit", (event) => {
+            event.preventDefault();
+            const asignatura = document
+              .getElementById("asignatura")
+              .value.trim();
+            const promedio = listado_matriculas.promedio_asignatura(asignatura);
 
-
+            if (promedio !== null) {
+              document.getElementById(
+                "resultado_consulta"
+              ).innerHTML = `<p>El promedio de la asignatura ${asignatura} es: ${promedio}</p>`;
+            } else {
+              document.getElementById(
+                "resultado_consulta"
+              ).innerHTML = `<p>No se encontraron calificaciones para la asignatura ${asignatura}.</p>`;
+            }
+          });
+        }
+      }, 10);
+      break;
 
     case 17:
       listado_alumnos.mostrar_listado_alumnos();
