@@ -68,8 +68,11 @@ function opcion_seleccionada() {
 
   switch (opcion_menu) {
     case 0:
-      mostrar_Resultados.innerHTML = `<p>Hasta la próxima.</p>`;
-      break;
+    mostrar_Resultados.innerHTML = `<p>Hasta la próxima.</p>`;
+    setTimeout(() => {
+      window.location.href = "index.html";      
+    }, 10); 
+    break;
     case 1:
       mostrar_Resultados.innerHTML = `<p>Ver listado de alumnos.</p>`;
       listado_alumnos.mostrar_listado_alumnos();
