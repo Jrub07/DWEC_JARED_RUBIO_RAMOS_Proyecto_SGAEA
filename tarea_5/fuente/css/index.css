@@ -125,4 +125,8 @@ section p {
   }
 }
 
-
+button[id^="btn_"] {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+}
