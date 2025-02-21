@@ -13,6 +13,7 @@ class base_datos {
         return datos ? JSON.parse(datos) : console.log('No hay datos');
     }
 
+    //Esto no lo uso, pero lo dejo por si acaso ya que puede ser interesante
     static eliminar_datos(clave) {
         localStorage.removeItem(clave);
     }
@@ -39,7 +40,7 @@ class base_datos {
             [estudiante_3, asignatura_2, "22-01-1998", '22-02-2007']
         ]);
 
-        // Guardamos datos como objetos planos para evitar la pérdida de propiedad de campos privados
+        
         this.guardar_datos("listado_alumnos", listado_alumnos.listado_x.map(alumno => ({
             id: alumno.id,
             nombre: alumno.nombre
