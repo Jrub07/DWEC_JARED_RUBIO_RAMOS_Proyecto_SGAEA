@@ -8,13 +8,9 @@ import Funciones from "./Funciones.js";
 BD.init();
 
 const listado_alumnos = new Listados(BD.recoger_datos("listado_alumnos"));
-const listado_asignaturas = new Listados(
-  BD.recoger_datos("listado_asignaturas")
-);
+const listado_asignaturas = new Listados(BD.recoger_datos("listado_asignaturas"));
 const listado_matriculas = new Listados(BD.recoger_datos("listado_matriculas"));
-const listado_desmatriculaciones = new Listados(
-  BD.recoger_datos("listado_desmatriculaciones")
-);
+const listado_desmatriculaciones = new Listados(BD.recoger_datos("listado_desmatriculaciones"));
 
 document.getElementById("ejecutar").addEventListener("click", () => {
   document.getElementById("ejecutar").style.display = "none";
@@ -25,55 +21,46 @@ function mostrar_menu() {
   const mostrar_Resultados = document.getElementById("mostrar_resultados");
   mostrar_Resultados.innerHTML = `
         <p>Bienvenido al programa de gestión de alumnos.</p>
-        <p>Escribe una opción del menú:</p>
+        <p>Selecciona una opción del menú:</p>
         <ul>
-            <li>0- Salir</li>
-            <li>1- Ver listado de alumnos</li>
-            <li>2- Ver listado de asignaturas</li>
-            <li>3- Ver listado de matriculaciones</li>
-            <li>4- Ver listado de desmatriculaciones</li>
-            <li>5- Buscar un alumno por texto</li>
-            <li>6- Agregar un alumno al listado</li>
-            <li>7- Eliminar un alumno del listado</li>
-            <li>8- Buscar una asignatura por texto</li>
-            <li>9- Agregar una asignatura al listado</li>
-            <li>10- Eliminar una asignatura del listado</li>
-            <li>11- Matricular a un alumno en una asignatura</li>
-            <li>12- Desmatricular a un alumno de una asignatura</li>
-            <li>13- Agregar notas a un estudiante</li>
-            <li>14- Consultar promedio de un alumno general</li>
-            <li>15- Consultar promedio de un alumno por asignatura</li>
-            <li>16- Consultar promedio de una asignatura</li>
-            <li>17- Consultar promedio general de alumnos</li>
-            <li>18- Consultar reporte general</li>
+            
+            <li><button id="btn_1">1-Ver listado de alumnos</button></li>
+            <li><button id="btn_2">2-Ver listado de asignaturas</button></li>
+            <li><button id="btn_3">3-Ver listado de matriculaciones</button></li>
+            <li><button id="btn_4">4-Ver listado de desmatriculaciones</button></li>
+            <li><button id="btn_5">5-Buscar un alumno por texto</button></li>
+            <li><button id="btn_6">6-Agregar un alumno al listado</button></li>
+            <li><button id="btn_7">7-Eliminar un alumno del listado</button></li>
+            <li><button id="btn_8">8-Buscar una asignatura por texto</button></li>
+            <li><button id="btn_9">9-Agregar una asignatura al listado</button></li>
+            <li><button id="btn_10">10-Eliminar una asignatura del listado</button></li>
+            <li><button id="btn_11">Matricular a un alumno en una asignatura</button></li>
+            <li><button id="btn_12">11-Desmatricular a un alumno de una asignatura</button></li>
+            <li><button id="btn_13">12-Agregar notas a un estudiante</button></li>
+            <li><button id="btn_14">13-Consultar promedio de un alumno general</button></li>
+            <li><button id="btn_15">14-Consultar promedio de un alumno por asignatura</button></li>
+            <li><button id="btn_16">15-Consultar promedio de una asignatura</button></li>
+            <li><button id="btn_17">16-Consultar promedio general de alumnos</button></li>
+            <li><button id="btn_18">17-Consultar reporte general</button></li>
         </ul>
-
-        <!-- Formulario -->
-        <form id="formulario_main">
-            <input type="number" id="opcion_menu" name="opcion_menu" placeholder="Ingresa una opción entre 0 y 18" required min="0" max="18">
-            <button type="submit">Enviar</button>
-        </form>
     `;
 
-  document
-    .getElementById("formulario_main")
-    .addEventListener("submit", function (event) {
-      event.preventDefault();
-      opcion_seleccionada();
-    });
+    //Opcion nueva, se elimina el 0 de salir y va desde 1 hasta 18 que activa el menú gráfico
+    for (let i = 1; i <= 18; i++) {
+    const btn = document.getElementById(`btn_${i}`);
+    if (btn) {
+      btn.addEventListener("click", () => {
+        handleOption(i);
+      });
+    }
+  }
 }
 
-function opcion_seleccionada() {
-  const opcion_menu = parseInt(document.getElementById("opcion_menu").value);
+function handleOption(opcion_menu) {
   const mostrar_Resultados = document.getElementById("mostrar_resultados");
 
   switch (opcion_menu) {
-    case 0:
-    mostrar_Resultados.innerHTML = `<p>Hasta la próxima.</p>`;
-    setTimeout(() => {
-      window.location.href = "index.html";      
-    }, 10); 
-    break;
+    
     case 1:
       mostrar_Resultados.innerHTML = `<p>Ver listado de alumnos.</p>`;
       listado_alumnos.mostrar_listado_alumnos();
@@ -137,23 +124,14 @@ function opcion_seleccionada() {
             const calle = document.getElementById("calle").value.trim();
             const numero = document.getElementById("numero").value.trim();
             const piso = document.getElementById("piso").value.trim();
-            const codigo_postal = document
-              .getElementById("codigo_postal")
-              .value.trim();
+            const codigo_postal = document.getElementById("codigo_postal").value.trim();
             const provincia = document.getElementById("provincia").value.trim();
             const localidad = document.getElementById("localidad").value.trim();
 
             const estudiante_nuevo = new Estudiante(
               id,
               nombre,
-              new Direccion(
-                calle,
-                numero,
-                piso,
-                codigo_postal,
-                provincia,
-                localidad
-              )
+              new Direccion(calle, numero, piso, codigo_postal, provincia, localidad)
             );
             estudiante_nuevo.validar_cadenas(nombre);
             listado_alumnos.agregar_alumno_listado(estudiante_nuevo);
@@ -164,7 +142,6 @@ function opcion_seleccionada() {
 
     case 7:
       listado_alumnos.mostrar_listado_alumnos();
-
       mostrar_Resultados.innerHTML += `
         <p>Eliminar un alumno del listado.</p>
         <form id="formulario_borrar">
@@ -173,7 +150,6 @@ function opcion_seleccionada() {
             <section id="resultado_borrar"></section>
         </form>
     `;
-
       setTimeout(() => {
         const formulario = document.getElementById("formulario_borrar");
         if (formulario) {
@@ -181,17 +157,14 @@ function opcion_seleccionada() {
             event.preventDefault();
             const id_alumno = document.getElementById("id_alumno").value.trim();
             const resultadoBorrar = document.getElementById("resultado_borrar");
-
             if (id_alumno) {
               listado_alumnos.eliminar_alumno_listado(id_alumno);
-
               if (resultadoBorrar) {
                 resultadoBorrar.innerHTML = "<p>Alumno borrado con éxito.</p>";
               }
             } else {
               if (resultadoBorrar) {
-                resultadoBorrar.innerHTML =
-                  "<p>Por favor, ingrese un ID válido.</p>";
+                resultadoBorrar.innerHTML = "<p>Por favor, ingrese un ID válido.</p>";
               }
             }
           });
@@ -201,9 +174,7 @@ function opcion_seleccionada() {
 
     case 8:
       mostrar_Resultados.innerHTML = `<p>Buscar una asignatura por texto.</p>`;
-
       Funciones.pedir_string("Asignatura a buscar");
-
       setTimeout(() => {
         const formulario = document.getElementById("formulario_texto");
         if (formulario) {
@@ -222,28 +193,23 @@ function opcion_seleccionada() {
                 <label for="nombre_asignatura">Nombre de la asignatura:</label>
                 <input type="text" id="nombre_asignatura" name="nombre_asignatura" pattern="[A-Za-záéíóúÁÉÍÓÚüÜ]+" required>
                 <button type="submit">Agregar asignatura</button>
-                </form>`;
-
-      setTimeout((event) => {
+            </form>`;
+      setTimeout(() => {
         const formulario = document.getElementById("formulario_asignatura");
         if (formulario) {
           formulario.addEventListener("submit", (event) => {
             event.preventDefault();
-            const nombre_asignatura = document
-              .getElementById("nombre_asignatura")
-              .value.trim();
+            const nombre_asignatura = document.getElementById("nombre_asignatura").value.trim();
             const asignatura_nueva = new Asignaturas(nombre_asignatura, null);
             asignatura_nueva.validar_cadena_asignatura(nombre_asignatura);
             listado_asignaturas.agregar_asignatura_listado(asignatura_nueva);
           });
         }
       }, 10);
-
       break;
 
     case 10:
       listado_asignaturas.mostrar_listado_asignaturas();
-
       mostrar_Resultados.innerHTML += `
         <p>Eliminar una asignatura del listado.</p>
         <form id="formulario_borrar_asignatura">
@@ -252,40 +218,25 @@ function opcion_seleccionada() {
             <section id="resultado_borrar_asignatura"></section>
         </form>
     `;
-
       setTimeout(() => {
-        const formulario = document.getElementById(
-          "formulario_borrar_asignatura"
-        );
+        const formulario = document.getElementById("formulario_borrar_asignatura");
         if (formulario) {
           formulario.addEventListener("submit", (event) => {
             event.preventDefault();
-            const nombre_asignatura = document
-              .getElementById("nombre_asignatura")
-              .value.trim();
-            const resultadoBorrar = document.getElementById(
-              "resultado_borrar_asignatura"
-            );
-
+            const nombre_asignatura = document.getElementById("nombre_asignatura").value.trim();
+            const resultadoBorrar = document.getElementById("resultado_borrar_asignatura");
             if (nombre_asignatura) {
-              const eliminada = listado_asignaturas.eliminar_asignatura_listado(
-                nombre_asignatura,
-                listado_matriculas
-              );
-
+              const eliminada = listado_asignaturas.eliminar_asignatura_listado(nombre_asignatura, listado_matriculas);
               if (resultadoBorrar) {
                 if (eliminada) {
-                  resultadoBorrar.innerHTML =
-                    "<p>Asignatura borrada con éxito.</p>";
+                  resultadoBorrar.innerHTML = "<p>Asignatura borrada con éxito.</p>";
                 } else {
-                  resultadoBorrar.innerHTML =
-                    "<p>No existe esa asignatura en el listado.</p>";
+                  resultadoBorrar.innerHTML = "<p>No existe esa asignatura en el listado.</p>";
                 }
               }
             } else {
               if (resultadoBorrar) {
-                resultadoBorrar.innerHTML =
-                  "<p>Por favor, ingrese un nombre de asignatura válido.</p>";
+                resultadoBorrar.innerHTML = "<p>Por favor, ingrese un nombre de asignatura válido.</p>";
               }
             }
           });
@@ -303,21 +254,14 @@ function opcion_seleccionada() {
                     <input type="text" id="asignatura_nombre" name="asignatura_nombre" required>
                     <button type="submit">Matricular</button>
                 </form>`;
-
       setTimeout(() => {
         const formulario = document.getElementById("formulario_matricular");
         if (formulario) {
           formulario.addEventListener("submit", (event) => {
             event.preventDefault();
             const id_alumno = document.getElementById("id_alumno").value.trim();
-            const asignatura_nombre = document
-              .getElementById("asignatura_nombre")
-              .value.trim();
-
-            listado_matriculas.matricular_alumno_asignatura(
-              id_alumno,
-              asignatura_nombre
-            );
+            const asignatura_nombre = document.getElementById("asignatura_nombre").value.trim();
+            listado_matriculas.matricular_alumno_asignatura(id_alumno, asignatura_nombre);
           });
         }
       }, 10);
@@ -336,40 +280,30 @@ function opcion_seleccionada() {
             <section id="resultado_desmatricular"></section>
         </form>
     `;
-
       setTimeout(() => {
         const formulario = document.getElementById("formulario_desmatricular");
         if (formulario) {
           formulario.addEventListener("submit", (event) => {
             event.preventDefault();
             const id_alumno = document.getElementById("id_alumno").value.trim();
-            const asignatura_nombre = document
-              .getElementById("asignatura_nombre")
-              .value.trim();
-            const resultadoDesmatricular = document.getElementById(
-              "resultado_desmatricular"
-            );
-
+            const asignatura_nombre = document.getElementById("asignatura_nombre").value.trim();
+            const resultadoDesmatricular = document.getElementById("resultado_desmatricular");
             if (id_alumno && asignatura_nombre) {
               const exito = listado_matriculas.desmatricular_alumno_asignatura(
                 id_alumno,
                 asignatura_nombre,
                 listado_desmatriculaciones
               );
-
               if (resultadoDesmatricular) {
                 if (exito) {
-                  resultadoDesmatricular.innerHTML =
-                    "<p>Alumno desmatriculado con éxito.</p>";
+                  resultadoDesmatricular.innerHTML = "<p>Alumno desmatriculado con éxito.</p>";
                 } else {
-                  resultadoDesmatricular.innerHTML =
-                    "<p>No se encontró la matrícula para eliminar.</p>";
+                  resultadoDesmatricular.innerHTML = "<p>No se encontró la matrícula para eliminar.</p>";
                 }
               }
             } else {
               if (resultadoDesmatricular) {
-                resultadoDesmatricular.innerHTML =
-                  "<p>Por favor, complete todos los campos.</p>";
+                resultadoDesmatricular.innerHTML = "<p>Por favor, complete todos los campos.</p>";
               }
             }
           });
@@ -391,38 +325,26 @@ function opcion_seleccionada() {
               <button type="submit">Agregar nota</button>
           </form>
       `;
-
       setTimeout(() => {
         const formulario = document.getElementById("formulario_notas");
         if (formulario) {
           formulario.addEventListener("submit", (event) => {
             event.preventDefault();
             const id_alumno = document.getElementById("id_alumno").value.trim();
-            const asignatura_nombre = document
-              .getElementById("asignatura_nombre")
-              .value.trim();
+            const asignatura_nombre = document.getElementById("asignatura_nombre").value.trim();
             const nota = parseInt(document.getElementById("nota").value.trim());
-
             let mensajeError = document.getElementById("mensaje_error");
-
             if (!mensajeError) {
               mensajeError = document.createElement("p");
               mensajeError.id = "mensaje_error";
               formulario.appendChild(mensajeError);
             }
-
             if (isNaN(nota)) {
               mensajeError.innerHTML = "La nota debe ser un número válido.";
               return;
             }
-
             mensajeError.innerHTML = "";
-
-            listado_matriculas.agregar_notas_matricula(
-              id_alumno,
-              asignatura_nombre,
-              nota
-            );
+            listado_matriculas.agregar_notas_matricula(id_alumno, asignatura_nombre, nota);
           });
         }
       }, 10);
@@ -438,25 +360,17 @@ function opcion_seleccionada() {
                     <button type="submit">Consultar promedio</button>
                 </form>
                 <section id="resultado_consulta"></section>`;
-
       setTimeout(() => {
-        const formulario = document.getElementById(
-          "formulario_promedio_general"
-        );
+        const formulario = document.getElementById("formulario_promedio_general");
         if (formulario) {
           formulario.addEventListener("submit", (event) => {
             event.preventDefault();
             const id_alumno = document.getElementById("id_alumno").value.trim();
             let promedio = listado_matriculas.promedio_notas_alumno(id_alumno);
-
             if (promedio === null) {
-              document.getElementById(
-                "resultado_consulta"
-              ).innerHTML += `<p>No se encontraron asignaturas para este alumno.</p>`;
+              document.getElementById("resultado_consulta").innerHTML += `<p>No se encontraron asignaturas para este alumno.</p>`;
             } else {
-              document.getElementById(
-                "resultado_consulta"
-              ).innerHTML += `<p>El promedio general del alumno es: ${promedio}</p>`;
+              document.getElementById("resultado_consulta").innerHTML += `<p>El promedio general del alumno es: ${promedio}</p>`;
             }
           });
         }
@@ -465,7 +379,6 @@ function opcion_seleccionada() {
 
     case 15:
       listado_matriculas.mostrar_matriculaciones();
-
       mostrar_Resultados.innerHTML += `
                     <p>Consultar promedio de un alumno por asignatura.</p>
                     <form id="formulario_promedio_asignatura">
@@ -477,35 +390,19 @@ function opcion_seleccionada() {
                         <br>
                         <button type="submit">Consultar promedio</button>
                     </form>
-                    <section id="resultado_consulta"></section>
-                `;
-
+                    <section id="resultado_consulta"></section>`;
       setTimeout(() => {
-        const formulario = document.getElementById(
-          "formulario_promedio_asignatura"
-        );
+        const formulario = document.getElementById("formulario_promedio_asignatura");
         if (formulario) {
           formulario.addEventListener("submit", (event) => {
             event.preventDefault();
             const id_alumno = document.getElementById("id_alumno").value.trim();
-            const asignatura = document
-              .getElementById("asignatura")
-              .value.trim();
-
-            let ver_promedio =
-              listado_matriculas.promedio_notas_indidivuales_asignatura(
-                id_alumno,
-                asignatura
-              );
-
+            const asignatura = document.getElementById("asignatura").value.trim();
+            let ver_promedio = listado_matriculas.promedio_notas_indidivuales_asignatura(id_alumno, asignatura);
             if (ver_promedio != null) {
-              document.getElementById(
-                "resultado_consulta"
-              ).innerHTML = `<p>Promedio para ${asignatura} es igual a: ${ver_promedio}</p>`;
+              document.getElementById("resultado_consulta").innerHTML = `<p>Promedio para ${asignatura} es igual a: ${ver_promedio}</p>`;
             } else {
-              document.getElementById(
-                "resultado_consulta"
-              ).innerHTML = `<p>No se encontró promedio para ${asignatura}.</p>`;
+              document.getElementById("resultado_consulta").innerHTML = `<p>No se encontró promedio para ${asignatura}.</p>`;
             }
           });
         }
@@ -521,29 +418,18 @@ function opcion_seleccionada() {
                     <input type="text" id="asignatura" name="asignatura" required>
                     <button type="submit">Consultar promedio</button>
                 </form>
-                <section id="resultado_consulta"></section>
-            `;
-
+                <section id="resultado_consulta"></section>`;
       setTimeout(() => {
-        const formulario = document.getElementById(
-          "formulario_promedio_asignatura"
-        );
+        const formulario = document.getElementById("formulario_promedio_asignatura");
         if (formulario) {
           formulario.addEventListener("submit", (event) => {
             event.preventDefault();
-            const asignatura = document
-              .getElementById("asignatura")
-              .value.trim();
+            const asignatura = document.getElementById("asignatura").value.trim();
             const promedio = listado_matriculas.promedio_asignatura(asignatura);
-
             if (promedio !== null) {
-              document.getElementById(
-                "resultado_consulta"
-              ).innerHTML = `<p>El promedio de la asignatura ${asignatura} es: ${promedio}</p>`;
+              document.getElementById("resultado_consulta").innerHTML = `<p>El promedio de la asignatura ${asignatura} es: ${promedio}</p>`;
             } else {
-              document.getElementById(
-                "resultado_consulta"
-              ).innerHTML = `<p>No se encontraron calificaciones para la asignatura ${asignatura}.</p>`;
+              document.getElementById("resultado_consulta").innerHTML = `<p>No se encontraron calificaciones para la asignatura ${asignatura}.</p>`;
             }
           });
         }
@@ -564,6 +450,7 @@ function opcion_seleccionada() {
       break;
   }
 
+  // Botón para volver al menú principal que aparece debajo de cada opcion
   mostrar_Resultados.innerHTML += `<button id="boton_volver">Volver</button>`;
   document.getElementById("boton_volver").addEventListener("click", () => {
     mostrar_menu();
