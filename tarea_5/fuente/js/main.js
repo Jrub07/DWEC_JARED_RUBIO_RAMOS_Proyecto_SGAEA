@@ -34,14 +34,14 @@ function mostrar_menu() {
             <li><button id="btn_8">8-Buscar una asignatura por texto</button></li>
             <li><button id="btn_9">9-Agregar una asignatura al listado</button></li>
             <li><button id="btn_10">10-Eliminar una asignatura del listado</button></li>
-            <li><button id="btn_11">Matricular a un alumno en una asignatura</button></li>
-            <li><button id="btn_12">11-Desmatricular a un alumno de una asignatura</button></li>
-            <li><button id="btn_13">12-Agregar notas a un estudiante</button></li>
-            <li><button id="btn_14">13-Consultar promedio de un alumno general</button></li>
-            <li><button id="btn_15">14-Consultar promedio de un alumno por asignatura</button></li>
-            <li><button id="btn_16">15-Consultar promedio de una asignatura</button></li>
-            <li><button id="btn_17">16-Consultar promedio general de alumnos</button></li>
-            <li><button id="btn_18">17-Consultar reporte general</button></li>
+            <li><button id="btn_11">11-Matricular a un alumno en una asignatura</button></li>
+            <li><button id="btn_12">12-Desmatricular a un alumno de una asignatura</button></li>
+            <li><button id="btn_13">13-Agregar notas a un estudiante</button></li>
+            <li><button id="btn_14">14-Consultar promedio de un alumno general</button></li>
+            <li><button id="btn_15">15-Consultar promedio de un alumno por asignatura</button></li>
+            <li><button id="btn_16">16-Consultar promedio de una asignatura</button></li>
+            <li><button id="btn_17">17-Consultar promedio general de alumnos</button></li>
+            <li><button id="btn_18">18-Consultar reporte general</button></li>
         </ul>
     `;
 
