@@ -3,7 +3,6 @@ import Estudiante from "./Estudiantes.js";
 import Direccion from "./Direccion.js";
 import Asignaturas from "./Asignaturas.js";
 import Listados from "./Listados.js";
-import errorPersonalizado from "./errorPersonalizado.js";
 import Funciones from "./Funciones.js";
 
 BD.init();
