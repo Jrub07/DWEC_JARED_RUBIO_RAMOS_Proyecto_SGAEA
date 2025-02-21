@@ -27,6 +27,7 @@ function mostrar_menu() {
         <p>Bienvenido al programa de gestión de alumnos.</p>
         <p>Escribe una opción del menú:</p>
         <ul>
+            <li>0- Salir</li>
             <li>1- Ver listado de alumnos</li>
             <li>2- Ver listado de asignaturas</li>
             <li>3- Ver listado de matriculaciones</li>
@@ -66,10 +67,14 @@ function opcion_seleccionada() {
   const opcion_menu = parseInt(document.getElementById("opcion_menu").value);
   const mostrar_Resultados = document.getElementById("mostrar_resultados");
 
-  switch (opcion_menu) {
+  switch (opcion_menu) {    
     case 0:
-      mostrar_Resultados.innerHTML = `<p>Hasta la próxima.</p>`;
-      break;
+    mostrar_Resultados.innerHTML = `<p>Hasta la próxima.</p>`;
+    setTimeout(() => {
+      window.location.href = "/tarea_5/fuente/html/index.html";      
+    }, 10); 
+    break;
+
     case 1:
       mostrar_Resultados.innerHTML = `<p>Ver listado de alumnos.</p>`;
       listado_alumnos.mostrar_listado_alumnos();
