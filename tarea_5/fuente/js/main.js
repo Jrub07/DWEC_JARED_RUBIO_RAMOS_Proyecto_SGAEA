@@ -27,6 +27,7 @@ function mostrar_menu() {
         <p>Bienvenido al programa de gestión de alumnos.</p>
         <p>Escribe una opción del menú:</p>
         <ul>
+            <li>0- Salir</li>
             <li>1- Ver listado de alumnos</li>
             <li>2- Ver listado de asignaturas</li>
             <li>3- Ver listado de matriculaciones</li>
