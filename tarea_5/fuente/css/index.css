@@ -99,7 +99,6 @@ section p {
   text-align: center;
 }
 
-
 #mostrar_resultados p {
   margin-bottom: 5px;
   padding: 6px 12px;
@@ -109,20 +108,12 @@ section p {
   text-align: center;
 }
 
-#formulario_notas, #formulario_matricular,#formulario_desmatricular,#formulario_promedio_asignatura{
+#formulario_notas, 
+#formulario_matricular,
+#formulario_desmatricular,
+#formulario_promedio_asignatura,
+#formulario_promedio_general {
   align-self: center;
-}
-
-@media (min-width: 1920px) {
-  h3, ul, section p {
-    font-size: 2.5vh;
-  }
-}
-
-@media (min-width: 2560px) {
-  h3, ul, section p {
-    font-size: 3vh;
-  }
 }
 
 button[id^="btn_"] {
@@ -130,4 +121,54 @@ button[id^="btn_"] {
   width: 100%;
   box-sizing: border-box;
 }
+
+
+@media (min-width: 1920px) {
+  body {
+    font-size: 1.2rem;
+  }
+  h3, ul,button[id^="btn_"], section p {
+    font-size: 2.5vh;
+  }
+  input[type="text"], 
+  input[type="number"] {
+    font-size: 1.1rem;
+    padding: 12px;
+  }
+  button {
+    font-size: 1.1rem;
+    padding: 10px 20px;
+  }
+}
+
+@media (min-width: 2560px) {
+  body {
+    font-size: 1.9rem;
+  }
+
+  h3, ul, button[id^="btn_"], section p {
+    font-size: 3vh;
+  }
+
+  form {
+    max-width: 800px; 
+    width: 50vw; 
+    padding: 30px; 
+  }
+
+  input[type="text"], 
+  input[type="number"],
+  input[type="submit"] {
+    font-size: 3rem;
+    padding: 16px; 
+    width: 100%; 
+    max-width: 600px; 
+  }
+
+  button, #boton_volver {
+    font-size: 1.7rem;
+    padding: 12px 24px;
+  }
+}
+
 
