@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marvel</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@latest/dist/full.css" rel="stylesheet" type="text/css" />
+    <link href="https://cdn.jsdelivr.net/npm/@tailwindcss/ui@latest/dist/tailwind-ui.min.css" rel="stylesheet" />
+    <link href="./styles/salida.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100 text-gray-900">
+
+    <!-- Header de DaisyUI -->
+    <header class="navbar bg-red-600 text-white p-4 shadow-md">
+        <section class="container mx-auto flex justify-between items-center">
+            <a href="#" class="text-2xl font-bold flex items-center">
+                <img class="h-12 mr-2" src="./img/logo_marvel.png" alt="Marvel Logo"> 
+            </a>
+            <nav class="flex space-x-6">
+                <a href="#" class="hover:text-gray-300">Cine</a>
+                <a href="#" class="hover:text-gray-300">Películas</a>
+                <a href="#" class="hover:text-gray-300">Cómics</a>
+                <a href="https://www.marvel.com/" target="_blank" class="hover:text-gray-300">Oficial</a>
+            </nav>
+        </section>
+    </header>
+
+    <!-- Contenido principal -->
+    <main class="container mx-auto p-6">
+        <h1 class="text-4xl font-extrabold mb-6 text-center">Personajes de Marvel</h1>
+        
+        <!-- Tarjetas con Tailwind UI -->
+        <section id="marvel-container" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+           
+        </section>
+    </main>
+
+    <!-- Footer de DaisyUI -->
+    <footer class="footer p-10 bg-gray-800 text-gray-300">
+        <section>
+            <span class="footer-title">Marvel</span>
+            <a class="link link-hover">Acerca de</a>
+            <a class="link link-hover">Contacto</a>
+            <a class="link link-hover">Noticias</a>
+        </section>
+        <section>
+            <span class="footer-title">Redes Sociales</span>
+            <a class="link link-hover">Twitter</a>
+            <a class="link link-hover">Facebook</a>
+            <a class="link link-hover">Instagram</a>
+        </section>
+        <section>
+            <span class="footer-title">Legal</span>
+            <a class="link link-hover">Términos y condiciones</a>
+            <a class="link link-hover">Política de privacidad</a>
+        </section>
+    </footer>
+
+    <script src="./js/main.js"></script>
+</body>
+</html>

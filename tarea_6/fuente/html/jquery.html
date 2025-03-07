@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Marvel</title>
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/daisyui@latest/dist/full.css" rel="stylesheet" type="text/css" />
+  <link href="https://cdn.jsdelivr.net/npm/@tailwindcss/ui@latest/dist/tailwind-ui.min.css" rel="stylesheet" />
+  <link href="../fuente/styles/salida.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100 text-gray-900">
+
+  <!-- header de DaisyUI -->
+  <header class="navbar bg-red-600 text-white p-4 shadow-md">
+      <section class="container mx-auto flex justify-between items-center">
+          <a href="#" class="text-2xl font-bold flex items-center">
+              <img class="h-12 mr-2" src="../img/logo_marvel.png" alt="Marvel Logo"> 
+          </a>
+          <nav class="flex space-x-6">                
+              <a href="#" class="hover:text-gray-300">Películas</a>
+              <a href="#" class="hover:text-gray-300">Cómics</a>
+              <a href="https://www.marvel.com/" target="_blank" class="hover:text-gray-300">Oficial</a>
+          </nav>
+      </section>
+  </header>
+
+  <main class="container mx-auto p-6">
+      <h1 class="text-4xl font-extrabold mb-6 text-center">Personajes de Marvel</h1>
+      
+      <!-- Tarjetas de Tailwind UI, para colocar principalmente -->
+      <section id="marvel-container" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+         
+      </section>
+  </main>
+
+  <!-- Footer de DaisyUI -->
+  <footer class="footer p-10 bg-gray-800 text-gray-300">
+      <section>
+          <span class="footer-title">Marvel</span>
+          <a class="link link-hover">Acerca de</a>
+          <a class="link link-hover">Contacto</a>
+          <a class="link link-hover">Noticias</a>
+      </section>
+      <section>
+          <span class="footer-title">Redes Sociales</span>
+          <a class="link link-hover">Twitter</a>
+          <a class="link link-hover">Facebook</a>
+          <a class="link link-hover">Instagram</a>
+      </section>
+      <section>
+          <span class="footer-title">Legal</span>
+          <a class="link link-hover">Términos y condiciones</a>
+          <a class="link link-hover">Política de privacidad</a>
+      </section>
+  </footer>
+
+  <script>
+    $(document).ready(function() {
+      let offset = 0;
+      const limit = 100;
+      let cargando = false;
+
+      function obtener_personajes(offset) {
+        return new Promise((resolve, reject) => {
+          const clave_publica = 'ae345734f6b6d95b1051200b15c6fc5e';
+          const clave_privada = '8084e32acf3a80061a58b8cb59b0ffd9493a5151';
+          const tiempo = new Date().getTime();
+          const hash = CryptoJS.MD5(tiempo + clave_privada + clave_publica).toString();
+
+          const url = `https://gateway.marvel.com/v1/public/characters?ts=${tiempo}&apikey=${clave_publica}&hash=${hash}&offset=${offset}`;
+
+          $.ajax({
+            url: url,
+            method: 'GET',
+            success: function(data) {
+              resolve(data.data.results);
+            },
+            error: function(error) {
+              reject('Error en la solicitud a la API de Marvel');
+            }
+          });
+        });
+      }
+
+      function mezclar_array(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [array[i], array[j]] = [array[j], array[i]];
+        }
+        return array;
+      }
+
+      function cargar_personajes() {
+        if (cargando) return;
+        cargando = true;
+
+        obtener_personajes(offset)
+          .then(personajes => {
+            const contenedor_marvel = $('#marvel-container');
+
+            const personajes_mezclados = mezclar_array(personajes);
+
+            $.each(personajes_mezclados, function(index, personaje) {
+              const url_imagen = `${personaje.thumbnail.path}/portrait_xlarge.${personaje.thumbnail.extension}`;
+              const sin_imagen = personaje.thumbnail.path.includes("image_not_available");
+              const sin_descripcion = !personaje.description || personaje.description.trim() === "";
+
+              if (sin_imagen || sin_descripcion) return;
+
+              const carta_personaje = $(`
+                <section class="cartas bg-red-500 shadow-md rounded-xl p-4 flex flex-col items-center text-center w-full sm:w-11/12 md:w-48 lg:w-56 xl:w-64 2xl:w-72 mx-auto m-2 xl:text-xl 2xl:text-2xl hover:scale-105 transition-transform">
+                  <img src="${url_imagen}" alt="${personaje.name}" class="w-24 h-24 object-cover mb-2 xl:w-32 xl:h-32 2xl:w-40 2xl:h-40 rounded-lg">
+                  <article class="text-justify text-white">
+                    <h3 class="text-lg font-bold mb-1 xl:text-2xl 2xl:text-3xl">${personaje.name}</h3>
+                    <p class="text-sm xl:text-lg 2xl:text-xl">${personaje.description}</p>
+                  </article>
+                </section>
+              `);
+
+              contenedor_marvel.append(carta_personaje);
+            });
+
+            offset += limit;
+            cargando = false;
+          })
+          .catch(error => {
+            console.error('Error:', error);
+            cargando = false;
+          });
+      }
+
+      cargar_personajes();
+
+      $(window).on('scroll', function() {
+        if ($(window).scrollTop() + $(window).height() >= $(document).height() - 100) {
+          cargar_personajes();
+        }
+      });
+    });
+  </script>
+</body>
+</html>
