@@ -16,12 +16,12 @@ Una vez instalado, en la documentación oficial del framework se va indicando pa
 npm install tailwindcss@3.4.17
 ```
 
-Una vez instalado, se debe iniciar tailwind con el siguiente comando:
+Una vez instalado, se debe iniciar Tailwind con el siguiente comando:
 
 ```sh
-npx tailwindcss -i ./fuente/styles/input.css -o ./fuente/styles/salida.css --watch
+npx tailwindcss init
 ```
-Este comando se puede cancelar en cualquier momento usando `control+c`.
+
 
 Hecho eso, se pueden consultar diferentes adaptaciones de empresas para poder ejecutar el código Tailwind con más facilidad. En este caso se ha decidido implementar Tailwind UI (https://tailwindui.com/components), que facilita que los diseños tengan responsividad más fácil de manejar. Se puede instalar por npm pero también se puede adjuntar como enlace dentro de cada archivo a implementar, como por ejemplo con la siguiente línea:
 
@@ -58,7 +58,7 @@ Una vez asegurado que funciona bien, se hace una copia y se pega en otro archivo
 ```
 Una vez añadido se debe añadir con un script el código de jQuery, y una vez añadido se puede repetir el paso anterior para pasar el código Tailwind a CSS por si se quiere añadir algo extra, aunque como es el mismo no será necesario.
 
-## Configuración de Tailwind CSS
+## Configuración de Tailwind CSS y compilación
 
 El archivo `tailwind.config.js` se ha configurado para incluir el contenido de los archivos HTML y JS dentro de la carpeta `fuente`:
 
@@ -100,6 +100,12 @@ En el archivo `package.json` se han añadido los siguientes scripts:
   }
 }
 ```
+
+Finalmente, para compilar nos situamos dentro de cada archivo html con su codigo y empleados el siguiente comando:
+```
+npm run build:css
+
+``` 
 
 
 
