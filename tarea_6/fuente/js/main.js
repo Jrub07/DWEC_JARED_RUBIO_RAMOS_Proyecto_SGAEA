@@ -78,6 +78,7 @@ cargar_personajes();
 
 window.addEventListener('scroll', () => {
   if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 100) { 
+    //He añadido aqui el scroll, que se me habia pasado.
     cargar_personajes();
   }
 });

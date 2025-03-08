@@ -1,0 +1,16 @@
+{
+  "name": "tarea_6",
+  "version": "1.0.0",
+  "description": "Este proyecto muestra personajes del universo de los cómics de Marvel utilizando Tailwind CSS y DaisyUI para el diseño y la responsividad.",
+  "main": "index.js",
+  "scripts": {
+    "build:css": "npx tailwindcss -i ./fuente/styles/input.css -o ./fuente/styles/salida.css --watch",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "tailwindcss": "^3.4.17"
+  }
+}
